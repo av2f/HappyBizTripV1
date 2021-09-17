@@ -2,5 +2,20 @@
 // exemple :
 // $primary: darken(#428bca, 20%);
 
+// New colors
+$happyDarkBlue: #7fadc5;
+
+// Add font Dancing Script
+@font-face {
+  font-family: "DancingScript";
+  src: url("/public/fonts/DancingScript-VariableFont_wght.ttf");
+}
+
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
+
+.nav-title {
+  font-family: "DancingScript";
+  color: $happyDarkBlue;
+  font-weight: 600;
+}
