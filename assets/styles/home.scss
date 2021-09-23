@@ -1,0 +1,48 @@
+// style for homepage
+$hbtDarkBlue: #7fadc5;
+$hbtOrange: #f5853b;
+$happyGreen: #b1c18c;
+
+.home-jumbo {
+  background-color: $hbtDarkBlue;
+}
+
+.home-title {
+  color: #ffffff;
+  text-align: center;
+  
+  &.home-subtitle {
+      font-size: 1.8em;
+  }
+}
+
+// for small screen
+@media (max-width: 576px) {
+  .home-img {
+      margin-bottom: 1rem;
+  }
+}
+
+.home-img {
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  max-width: 80%;
+  max-height:400px;
+}
+
+.card-header {
+  background-color: $happyGreen;
+  color: #ffffff;
+}
+
+.concept-title,.pricing-title {
+  text-align: center;
+  color: $hbtOrange;
+  font-size: 3rem;
+  margin-left: 0.5rem;
+}
+
+.footer {
+  position: relative;
+}

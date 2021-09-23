@@ -1,283 +1,149 @@
 {% extends 'base.html.twig' %}
  
-{% block title %}Hello HomeController!
+{% block title %} {{ 'home.block.title'|trans|raw }} {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('styles/home') }}
+    {# {{ encore_entry_link_tags('css/datepicker/datepicker') }} #}
 {% endblock %}
- 
+
 {% block body %}
-    <div class="container">
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <span class="nav-title">HappyBizTrip</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#"><i class="fa fa-globe" id="lang"></i> Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
+  <main>
+    <div class="home-jumbo p-5 mb-4">
+      <div class="container-fluid py-5">
+        <div class="row align-items-center">
+          <div class="col-md-7">
+              <h1 class="display-4 home-title">{{ 'home.title'|trans|raw }}</h1>
+              <p class="lead home-title home-subtitle">{{ 'home.subtitle'|trans|raw }}</p>
+              <img class="home-img" src="{{ asset('img/library/imgHomepage.png') }}" alt="">
+          </div>
+          <div class="col-md-4">
+            <div class="card mt-1">
+              <div class="card-header text-center card-entete">
+                <h4><strong>{{ 'form.register_title'|trans|raw }}</strong></h4>
+                <h4><strong>{{ 'form.register_subtitle'|trans|raw }}</strong></h4>
+              </div>
+              {#
+              {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                  <div class="card-body">
+                      {{ fieldRender.formFieldRender('pseudo', form.pseudo, 'home_register') }}
+                      {{ fieldRender.formFieldRender('email', form.email, 'home_register') }}
+                      {{ fieldRender.formDateRender('birthDate', form.birthDate, 'home_register') }}
+                      {{ fieldRender.formFieldRender('password', form.password, 'home_register') }}
+                  </div>
+                  <div class="card-footer text-center">
+                      <button type="submit" class="btn btn-register btn-block">{{ 'form.btn_register'|trans|raw }}</button>
+                  </div>
+              {{ form_end(form) }}
+              #}
             </div>
-        </nav>
-        <main>
-            <div class="py-5 text-center mt-5">
-                <h2>Checkout form</h2>
-                <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
-            </div>
- 
-            <div class="row g-3">
-                <div class="col-md-5 col-lg-4 order-md-last">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Your cart</span>
-                        <span class="badge bg-secondary rounded-pill">3</span>
-                    </h4>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">Product name</h6>
-                                <small class="text-muted">Brief description</small>
-                            </div>
-                            <span class="text-muted">$12</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">Second product</h6>
-                                <small class="text-muted">Brief description</small>
-                            </div>
-                            <span class="text-muted">$8</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">Third item</h6>
-                                <small class="text-muted">Brief description</small>
-                            </div>
-                            <span class="text-muted">$5</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between bg-light">
-                            <div class="text-success">
-                                <h6 class="my-0">Promo code</h6>
-                                <small>EXAMPLECODE</small>
-                            </div>
-                            <span class="text-success">−$5</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Total (USD)</span>
-                            <strong>$20</strong>
-                        </li>
-                    </ul>
- 
-                    <form class="card p-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Promo code">
-                            <button type="submit" class="btn btn-secondary">Redeem</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-7 col-lg-8">
-                    <h4 class="mb-3">Billing address</h4>
-                    <form class="needs-validation" novalidate>
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <label for="firstName" class="form-label">First name</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
-                            </div>
- 
-                            <div class="col-sm-6">
-                                <label for="lastName" class="form-label">Last name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
-                                </div>
-                            </div>
- 
-                            <div class="col-12">
-                                <label for="username" class="form-label">Username</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">@</span>
-                                    <input type="text" class="form-control" id="username" placeholder="Username" required>
-                                    <div class="invalid-feedback">
-                                        Your username is required.
-                                    </div>
-                                </div>
-                            </div>
- 
-                            <div class="col-12">
-                                <label for="email" class="form-label">Email
-                                    <span class="text-muted">(Optional)</span>
-                                </label>
-                                <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                                <div class="invalid-feedback">
-                                    Please enter a valid email address for shipping updates.
-                                </div>
-                            </div>
- 
-                            <div class="col-12">
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-                                <div class="invalid-feedback">
-                                    Please enter your shipping address.
-                                </div>
-                            </div>
- 
-                            <div class="col-12">
-                                <label for="address2" class="form-label">Address 2
-                                    <span class="text-muted">(Optional)</span>
-                                </label>
-                                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-                            </div>
- 
-                            <div class="col-md-5">
-                                <label for="country" class="form-label">Country</label>
-                                <select class="form-select" id="country" required>
-                                    <option value="">Choose...</option>
-                                    <option>United States</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please select a valid country.
-                                </div>
-                            </div>
- 
-                            <div class="col-md-4">
-                                <label for="state" class="form-label">State</label>
-                                <select class="form-select" id="state" required>
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid state.
-                                </div>
-                            </div>
- 
-                            <div class="col-md-3">
-                                <label for="zip" class="form-label">Zip</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Zip code required.
-                                </div>
-                            </div>
-                        </div>
- 
-                        <hr class="my-4">
- 
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="same-address">
-                            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-                        </div>
- 
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="save-info">
-                            <label class="form-check-label" for="save-info">Save this information for next time</label>
-                        </div>
- 
-                        <hr class="my-4">
- 
-                        <h4 class="mb-3">Payment</h4>
- 
-                        <div class="my-3">
-                            <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                                <label class="form-check-label" for="credit">Credit card</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="debit">Debit card</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="paypal">PayPal</label>
-                            </div>
-                        </div>
- 
-                        <div class="row gy-3">
-                            <div class="col-md-6">
-                                <label for="cc-name" class="form-label">Name on card</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                <small class="text-muted">Full name as displayed on card</small>
-                                <div class="invalid-feedback">
-                                    Name on card is required
-                                </div>
-                            </div>
- 
-                            <div class="col-md-6">
-                                <label for="cc-number" class="form-label">Credit card number</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Credit card number is required
-                                </div>
-                            </div>
- 
-                            <div class="col-md-3">
-                                <label for="cc-expiration" class="form-label">Expiration</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Expiration date required
-                                </div>
-                            </div>
- 
-                            <div class="col-md-3">
-                                <label for="cc-cvv" class="form-label">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Security code required
-                                </div>
-                            </div>
-                        </div>
- 
-                        <hr class="my-4">
- 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-                    </form>
-                </div>
-            </div>
-        </main>
- 
-        <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2017–2020 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item">
-                    <a href="#">Privacy</a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#">Terms</a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#">Support</a>
-                </li>
-            </ul>
-        </footer>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="container">
+      <p class="concept-title">{{ 'home.concept_title'|trans|raw }}</p>
+      <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ullamcorper eget nulla facilisi etiam dignissim. Elementum sagittis vitae et leo duis ut. 
+          Dictum at tempor commodo ullamcorper a. Ornare lectus sit amet est placerat in egestas. 
+          Lectus magna fringilla urna porttitor rhoncus. Ut pharetra sit amet aliquam id diam. 
+          Est velit egestas dui id ornare arcu odio. Elit sed vulputate mi sit. Odio euismod lacinia at quis. 
+          Duis at consectetur lorem donec massa sapien faucibus. Tempor orci dapibus ultrices in iaculis nunc sed augue lacus. 
+          Fusce id velit ut tortor pretium viverra suspendisse potenti. Id diam maecenas ultricies mi eget. 
+          Aliquam eleifend mi in nulla posuere sollicitudin aliquam. Porttitor massa id neque aliquam vestibulum. 
+          Molestie nunc non blandit massa enim nec. 
+          Maecenas volutpat blandit aliquam etiam.
+      </p>
+      <p>
+          Non blandit massa enim nec dui nunc mattis enim ut. Ante metus dictum at tempor commodo ullamcorper. Mattis pellentesque id nibh tortor. Mauris commodo quis imperdiet massa tincidunt nunc pulvinar sapien. Sit amet aliquam id diam maecenas ultricies. Fringilla urna porttitor rhoncus dolor purus non enim. Malesuada fames ac turpis egestas integer eget aliquet nibh. Faucibus a pellentesque sit amet porttitor eget dolor morbi. Ut pharetra sit amet aliquam. Et sollicitudin ac orci phasellus egestas tellus rutrum tellus. Et malesuada fames ac turpis egestas sed tempus urna. Consequat interdum varius sit amet mattis.
+      </p>
+      <p class="pricing-title mt-5 mb-4">{{ 'home.price_title'|trans|raw }}</p>
+      <div class="row">
+          <div class="col-md-4 col-lg-4">
+              <div class="card mb-3">
+                  <div class="card-header">
+                      {{ 'subscription.type_free'|trans|raw }}
+                  </div>
+                  <div class="card-body">
+                      <span class="card-title">Discover the website</span>
+                      <hr>
+                      <h6 class="card-text">Features limited</h6>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+              <div class="card mb-3">
+                  <div class="card-header">
+                      {{ 'subscription.type_occasional'|trans|raw }}
+                  </div>
+                  <div class="card-body">
+                      <span class="card-title">8,99 &euro;</span>
+                      <span class="frequency"> / semaine</span>
+                      <hr>
+                      <h6 class="card-text">Engagement minimum de 1 semaine</h6>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+              <div class="card mb-3">
+                  <div class="card-header">
+                      {{ 'subscription.type_punctual'|trans|raw }}
+                  </div>
+                  <div class="card-body">
+                      <span class="card-title">28,99 &euro;</span>
+                      <span class="frequency"> / mois</span>
+                      <hr>
+                      <h6 class="card-text">Engagement minimum de 1 mois</h6>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-4 col-lg-4">
+              <div class="card mb-3">
+                  <div class="card-header">
+                      {{ 'subscription.type_temporary'|trans|raw }}
+                  </div>
+                  <div class="card-body">
+                      <span class="card-title">25,99 &euro;</span>
+                      <span class="frequency"> / mois</span>
+                      <hr>
+                      <h6 class="card-text">Engagement minimum de 3 mois</h6>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+              <div class="card mb-3">
+                  <div class="card-header">
+                      {{ 'subscription.type_regular'|trans|raw }}
+                  </div>
+                  <div class="card-body">
+                      <span class="card-title">20,99 &euro;</span>
+                      <span class="frequency"> / mois</span>
+                      <hr>
+                      <h6 class="card-text">Engagement minimum de 6 mois</h6>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+              <div class="card mb-3">
+                  <div class="card-header">
+                      {{ 'subscription.type_permanent'|trans|raw }}
+                  </div>
+                  <div class="card-body">
+                      <span class="card-title">17,99 &euro;</span>
+                      <span class="frequency"> / mois</span>
+                      <hr>
+                      <h6 class="card-text">Engagement minimum de 12 mois</h6>
+                  </div>
+              </div>
+          </div>
+      </div>
+      {# for datapicker customization #}
+      <input type="hidden" id="language" data-lang = "{{ app.request.locale }}">
+    </div>
+  </main>
+    
  
 {% endblock %}

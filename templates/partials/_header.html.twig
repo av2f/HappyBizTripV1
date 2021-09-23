@@ -1,0 +1,55 @@
+<nav id="navhome" class="navbar navbar-expand-lg navbar-light fixed-top">
+  {% set pathUrl = 'homepage' %}
+  {% if app.user %}
+    {% set pathUrl = 'hbtmain' %}
+  {% endif %}
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ path(pathUrl) }}">
+      <img src="{{ asset('img/library/hbtlogo.png') }}" width="32" height="32" class="d-inline-block align-top" alt="">
+      <span class="nav-title">HappyBizTrip</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">{{ 'menu.home_home'|trans|raw }} <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">{{ 'menu.home_concept'|trans|raw }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">{{ 'menu.home_price'|trans|raw }}</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav d-flex">
+        {# Language dropdown #}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="locales" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-globe" id="lang"></i> {{ app.request.locale|capitalize }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="locales">
+            {% for locale in locales() %}
+              <li>
+                {% set dropdownActive = "" %}
+                {% set dropdownAria = "" %}
+                {% if app.request.locale == locale.code %}
+                  {% set dropdownActive = "active" %}
+                  {% set dropdownAria = "aria-current=true" %}
+                {% endif %}
+                <a class="dropdown-item {{ dropdownActive }}" {{ dropdownAria }} href="{{ path(app.request.get('_route', 'homepage'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">
+                  {{ locale.name|capitalize }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+      {# <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> #}
+    </div>
+  </div>
+</nav>

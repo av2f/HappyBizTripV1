@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="home.block.title">
+              <source>home.block.title</source>
+              <target>Welcome</target>
+            </trans-unit>
+            <trans-unit id="menu.home_home">
+              <source>menu.home_home</source>
+              <target>Home</target>
+            </trans-unit>
+            <trans-unit id="menu.home_concept">
+              <source>menu.home_concept</source>
+              <target>Concept</target>
+            </trans-unit>
+            <trans-unit id="menu.home_price">
+              <source>menu.home_price</source>
+              <target>Pricing</target>
+            </trans-unit>
+            <trans-unit id="home.title">
+              <source>home.title</source>
+              <target>Welcome to HappyBizTrip</target>
+            </trans-unit>
+            <trans-unit id="home.subtitle">
+              <source>home.subtitle</source>
+              <target>Make your trip a fun...</target>
+            </trans-unit>
+            <trans-unit id="form.register_title">
+              <source>form.register_title</source>
+              <target>Not registered ?</target>
+            </trans-unit>
+            <trans-unit id="form.register_subtitle">
+              <source>form.register_subtitle</source>
+              <target>It's time to get started ?</target>
+            </trans-unit>
+            <trans-unit id="home.concept_title">
+              <source>home.concept_title</source>
+              <target>The Concept</target>
+            </trans-unit>
+             <trans-unit id="home.price_title">
+              <source>home.price_title</source>
+              <target>Pricing</target>
+            </trans-unit>
+            <trans-unit id="subscription.type_free">
+              <source>subscription.type_free</source>
+              <target>Free</target>
+            </trans-unit>
+            <trans-unit id="subscription.type_occasional">
+              <source>subscription.type_occasional</source>
+              <target>Occasional</target>
+            </trans-unit>
+            <trans-unit id="subscription.type_punctual">
+              <source>subscription.type_punctual</source>
+              <target>Punctual</target>
+            </trans-unit>
+            <trans-unit id="subscription.type_temporary">
+              <source>subscription.type_temporary</source>
+              <target>Temporary</target>
+            </trans-unit>
+            <trans-unit id="subscription.type_regular">
+              <source>subscription.type_regular</source>
+              <target>Regular</target>
+            </trans-unit>
+            <trans-unit id="subscription.type_permanent">
+              <source>subscription.type_permanent</source>
+              <target>Permanent</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

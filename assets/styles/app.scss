@@ -3,7 +3,22 @@
 // $primary: darken(#428bca, 20%);
 
 // New colors
-$happyDarkBlue: #7fadc5;
+$hbtDarkBlue: #7fadc5;
+$hbtPurple: #3f4253;
+$hbtOrange: #f5853b;
+$hbtGrey: #f5f5f5;
+$hbtDarkGrey: #a0a0a0;
+$hbtRed: #B81A18;
+$happyGreen: #b1c18c;
+
+// Custom Bootstrap
+// Add colors to $theme-colors
+// See file ~bootstrap/scss/_variables.scss
+$theme-colors: (
+  "hbtDarkBlue":  $hbtDarkBlue,
+  "hbtOrange":    $hbtOrange,
+  "hbtGrey":      $hbtGrey
+);
 
 // Add font Dancing Script
 @font-face {
@@ -14,8 +29,44 @@ $happyDarkBlue: #7fadc5;
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
+// Custom Body
+body {
+  margin-top: 60px;
+  background-color: white;
+}
+
+// change text color of navbar
+.navbar-nav {
+  .nav-link {
+    color: $hbtDarkBlue !important;
+  }
+  .nav-link.active {
+    color: $hbtPurple !important;
+  }
+}
+
 .nav-title {
   font-family: "DancingScript";
-  color: $happyDarkBlue;
+  color: $hbtDarkBlue;
   font-weight: 600;
+}
+
+.dropdown-item.active {
+  background-color: $hbtDarkBlue !important;
+}
+
+#navhome {
+  background-color: white;
+}
+
+#lang {
+  color: $hbtDarkBlue;
+};
+
+// Footer
+.footer {
+  // by default, position is relative
+  bottom: 0;
+  width: 100%;
+  background-color: $hbtGrey;
 }
