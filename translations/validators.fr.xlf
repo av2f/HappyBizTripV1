@@ -22,7 +22,6 @@
               <source>user.password.length</source>
               <target>Le mot de passe doit avoir au moins {{ limit }} caractères.</target>
             </trans-unit>
-            </trans-unit>
              <trans-unit id="user.firstName.not_blank">
               <source>user.firstName.not_blank</source>
               <target>Veuillez rensigner votre Prénom.</target>
