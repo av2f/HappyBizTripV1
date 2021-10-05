@@ -1,0 +1,105 @@
+{% extends 'baseLogin.html.twig' %}
+
+{% block title %}{{ 'login.block_title'|trans|raw }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('styles/login') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="d-flex justify-content-center p-2">
+        <img src="{{ asset('img/library/hbtlogo.png') }}" width="56" height="56" alt="">
+        <span class="title-form pt-2">HappyBizTrip</span>
+    </div>
+    {% if app.user %}
+        <h1>tu es deja connecté</h1>
+    {% else %}
+        <div class="d-flex justify-content-center pt-2">
+            <div class="card mb-3">
+                <div class="card-header text-white text-center">
+                    <h4>{{ 'login.card_header'|trans|raw }}</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                        {% if error %}
+                            <div class="alert alert-danger text-center" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <div class="form-group">
+                            <label class="form-label" for "inputEmail">{{ 'form.label_email'|trans|raw }}</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="form-label" for "inputPassword">{{ 'form.label_password'|trans|raw }}</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" required>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        {#
+                            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                            See https://symfony.com/doc/current/security/remember_me.html
+
+                            <div class="checkbox mb-3">
+                                <label>
+                                    <input type="checkbox" name="_remember_me"> Remember me
+                                </label>
+                            </div>
+                        #}
+                        <div class="d-grid gap-2 mx-auto mt-4">
+                            <button type="submit" class="btn btn-login">
+                                <i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;{{ 'form.btn_login'|trans|raw }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="row mt-2">
+                        <div class="col-4">
+                            <p id="p-left">
+                                <i class="fas fa-home"></i>&nbsp;
+                                <a href="{{ path('homepage') }}">{{ 'login.home.card_footer'|trans|raw }}</a>
+                            </p>
+                        </div>
+                        <div class="col-8">
+                            <p id="p-right">
+                                <i class="fas fa-user-lock"></i>&nbsp;
+                                <a href="#">{{ 'login.password.card_footer'|trans|raw }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {#}
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('hbt_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
+       
+
+       
+
+        <button class="btn btn-lg btn-primary" type="submit">
+            Sign in
+        </button>
+    </form>  #}
+</div>
+{% endblock %}

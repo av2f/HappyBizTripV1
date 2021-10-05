@@ -66,6 +66,34 @@
               <source>subscription.type_permanent</source>
               <target>Permanent</target>
             </trans-unit>
+            <trans-unit id="login.block_title">
+              <source>login.block_title</source>
+              <target>Sign in</target>
+            </trans-unit>
+             <trans-unit id="login.card_header">
+              <source>login.card_header</source>
+              <target>Please, sign in</target>
+            </trans-unit>
+            <trans-unit id="form.label_email">
+              <source>form.label_email</source>
+              <target>Email address</target>
+            </trans-unit>
+            <trans-unit id="form.label_password">
+              <source>form.label_password</source>
+              <target>Password</target>
+            </trans-unit>
+            <trans-unit id="form.btn_login">
+              <source>form.btn_login</source>
+              <target>Sign in</target>
+            </trans-unit>
+            <trans-unit id="login.home.card_footer">
+              <source>login.home.card_footer</source>
+              <target>Home</target>
+            </trans-unit>
+            <trans-unit id="login.password.card_footer">
+              <source>login.password.card_footer</source>
+              <target>Password forgotten ?</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
