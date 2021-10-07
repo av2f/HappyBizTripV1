@@ -5,7 +5,7 @@ $happyGreen: #b1c18c;
 $happyOrange: #f5853b;
 
 // adapt the position of footer according to screen size
-@media (min-width: 768px){
+@media (min-height: 860px) {
     .footer {
         position: absolute;
     }
@@ -54,10 +54,6 @@ $happyOrange: #f5853b;
     &.card-footer-logout {
         background-color: $happyDarkBlue;
     }
-}
-
-.alert-connected {
-    text-align: center;
 }
 
 .btn {

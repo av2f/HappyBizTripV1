@@ -4,12 +4,14 @@
 
 // New colors
 $hbtDarkBlue: #7fadc5;
-$hbtPurple: #3f4253;
-$hbtOrange: #f5853b;
-$hbtGrey: #f5f5f5;
+$hbtPurple:   #3f4253;
+$hbtOrange:   #f5853b;
+$hbtGrey:     #f5f5f5;
 $hbtDarkGrey: #a0a0a0;
-$hbtRed: #B81A18;
-$happyGreen: #b1c18c;
+$hbtRed:      #B81A18;
+$happyGreen:  #b1c18c;
+$danger:      #dc3545 !default;
+$info:        #0dcaf0 !default;
 
 // Custom Bootstrap
 // Add colors to $theme-colors
@@ -17,7 +19,9 @@ $happyGreen: #b1c18c;
 $theme-colors: (
   "hbtDarkBlue":  $hbtDarkBlue,
   "hbtOrange":    $hbtOrange,
-  "hbtGrey":      $hbtGrey
+  "hbtGrey":      $hbtGrey,
+  "danger":       $danger,
+  "info":         $info
 );
 
 // Add font Dancing Script

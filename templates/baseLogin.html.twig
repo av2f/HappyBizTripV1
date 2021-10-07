@@ -12,7 +12,7 @@
         {% block body %}{% endblock %}
 
         {# include footer #}
-        {% include 'partials/_footer.html.twig' with {'positionFooter' : 'absolute'} %}
+        {% include 'partials/_footer.html.twig' %}
     
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
