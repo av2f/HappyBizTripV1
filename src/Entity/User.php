@@ -6,9 +6,18 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\HasLifecycleCallbacks()
+ * 
+ * @UniqueEntity (
+ *  fields = {"email"},
+ *  message = "user.email.unique"
+ * )
+ * 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -21,6 +30,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * 
+     * @Assert\NotBlank(
+     *  message = "user.email.not_blank"
+     * )
+     * 
+     * @Assert\Email(
+     *  message = "user.email.invalid"
+     * )
+     * 
      */
     private $email;
 
@@ -32,6 +50,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * 
+     * @Assert\NotBlank(
+     *  message="user.password.not_blank"
+     * )
+     * @Assert\Length(
+     *  min=8,
+     *  minMessage="user.password.length"
+     * )
+     * 
      */
     private $password;
 
