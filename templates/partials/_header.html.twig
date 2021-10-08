@@ -1,7 +1,7 @@
 <nav id="navhome" class="navbar navbar-expand-lg navbar-light fixed-top">
   {% set pathUrl = 'homepage' %}
   {% if app.user %}
-    {% set pathUrl = 'hbtmain' %}
+    {% set pathUrl = 'hbt_main' %}
   {% endif %}
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ path(pathUrl) }}">
@@ -46,6 +46,13 @@
           </ul>
         </li>
       </ul>
+      {% if app.user %}
+        <p>tu es déjç connecté</p>
+      {% else %}
+        <a href="{{ path('hbt_login') }}">
+          <button class="btn btn-outline-hbtDarkBlue btn-sm my-sm-0 shadow-none">{{ 'menu.home.sign_in'|trans|raw }}</button>
+        </a>
+      {% endif %}
       {# <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>

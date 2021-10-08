@@ -124,6 +124,10 @@
               <source>login.alert.msg_loggued</source>
               <target>Vous êtes déjà connectés sous</target>
             </trans-unit>
+            <trans-unit id="menu.home.sign_in">
+              <source>menu.home.sign_in</source>
+              <target>Se connecter</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -1,8 +1,8 @@
 // style for login page
 // Colors
-$happyDarkBlue: #7fadc5;
-$happyGreen: #b1c18c;
-$happyOrange: #f5853b;
+$hbtDarkBlue: #7fadc5;
+$hbtGreen: #b1c18c;
+$hbtOrange: #f5853b;
 
 // adapt the position of footer according to screen size
 @media (min-height: 860px) {
@@ -14,7 +14,7 @@ $happyOrange: #f5853b;
 .title-form {
     font-family: "DancingScript";
     font-size: 2rem;
-    color: $happyDarkBlue;
+    color: $hbtDarkBlue;
 }
 
 .card {
@@ -23,15 +23,15 @@ $happyOrange: #f5853b;
 }
 
 .card-header {
-    background-color: $happyGreen;
+    background-color: $hbtGreen;
 }
 
 .btn-login {
-    background-color: $happyGreen;
+    background-color: $hbtGreen;
     color: #ffffff;
     font-weight: 400;
     &:hover {
-        background-color: $happyOrange;
+        background-color: $hbtOrange;
         color: #ffffff;
     }
 }
@@ -42,6 +42,10 @@ $happyOrange: #f5853b;
     }
     a {
         color: #000000;
+        text-decoration: none;
+        &:hover {
+            color: $hbtGreen;
+        }
     }
     #p-left {
         color: #000000;
@@ -52,17 +56,17 @@ $happyOrange: #f5853b;
         text-align: right;
     }
     &.card-footer-logout {
-        background-color: $happyDarkBlue;
+        background-color: $hbtDarkBlue;
     }
 }
 
 .btn {
     &.btn-disconnect {
-        background-color: $happyOrange;
+        background-color: $hbtOrange;
         color: #ffffff
     }
     &.btn-homepage {
-        background-color: $happyDarkBlue;
+        background-color: $hbtDarkBlue;
         color: #ffffff;
     }
 }
