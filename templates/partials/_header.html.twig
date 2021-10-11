@@ -47,7 +47,13 @@
         </li>
       </ul>
       {% if app.user %}
-        <p>tu es déjç connecté</p>
+        <ul class="navbar-nav mr">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toogle" href="#" data-bs-toggle="dropdown" id="accountDropdownLink">
+              <img src="{{ asset('img/library/defaultAvatar.png') }}" class="avatar avatar-mini" id="imgAvatarNav" alt="">
+            </a>
+          </li>
+        </ul>
       {% else %}
         <a href="{{ path('hbt_login') }}">
           <button class="btn btn-outline-hbtDarkBlue btn-sm my-sm-0 shadow-none">{{ 'menu.home.sign_in'|trans|raw }}</button>

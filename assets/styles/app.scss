@@ -78,3 +78,29 @@ body {
 .btn-outline-hbtDarkBlue:hover {
   color: #ffffff;
 }
+
+.avatar {
+  max-width: 256px;
+  max-height: 256px;
+  border-radius: 50%;
+
+  &.avatar-large {
+    max-width: 128px;
+    max-height: 128px;
+  }
+  
+  &.avatar-medium {
+      max-width: 64px;
+      max-height: 64px;
+  }
+
+  &.avatar-mini {
+      max-width: 32px;
+      max-height: 32px;
+  }
+
+  &.avatar-micro {
+      max-width: 20px;
+      max-height: 20px;
+  }
+}

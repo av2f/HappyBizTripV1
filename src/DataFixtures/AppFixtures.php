@@ -1,4 +1,13 @@
 <?php
+/**
+ * BE CAREFUL : before performing fixtures, comment the line
+ * in User entity => function setInitialUser()
+ * $this->setIsSubscribed(false);
+ * AND
+ * in Messaging entity => function setInitialMessaging()
+ * $this->createdAt = new \DateTime();
+ * $this->setIsReaded(false);
+ */
 
 namespace App\DataFixtures;
 
@@ -20,17 +29,60 @@ class AppFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        $NB_USER = 20;
         $faker = Faker\Factory::create('fr_FR');
-        for ($i=0; $i<=20; $i++)
-        {
+        // Define genders (W=Woman / M=Man)
+        $genders = array('W', 'M');
+        // Define situation (C=Couple / S=Single / K=Keep myself)
+        $situations = array('C', 'S', 'K');
+        // Define if subscribed
+        $subscribes = array(true, false);
+
+        for ($i=0; $i<=$NB_USER; $i++) {
             $user = new User();
-            $user->setEmail($faker->email);
-            $user->setPassword(
-                $this->passwordHasher->hashPassword(
-                    $user,
-                    'password'
+            
+            // Generate randomly if subscribed or not
+            $subscribed = $subscribes[mt_rand(0, count($subscribes)-1)];
+
+            // Generate randomly situation
+            $situation = $situations[mt_rand(0, count($situations)-1)];
+
+            // Generate ramdonly the gender
+            $gender = $genders[mt_rand(0, count($genders)-1)];
+
+            // generate firstname and avatar following the gender
+            $firstname = ($gender = 'M' ? 
+                $faker->firstName : $faker->firstNameFemale);
+
+            // Generate a picture
+            $picture = 'https://randomuser.me/api/portraits/';
+            $pictureId = $faker->numberbetween(1, 99) . '.jpg';
+            $picture .= ($gender=='M' ? 'men/' : 'women/') .$pictureId;
+            
+            // define a birthday date
+            $birthDate = new \DateTimeImmutable();
+            $birthDate = $faker->dateTimeBetween('-60 years', '-20 years');
+
+            // Create new user
+            // CreatedAt is generated with prePersist function
+            $user->setEmail($faker->email)
+                ->setPassword(
+                    $this->passwordHasher->hashPassword(
+                        $user,
+                        'password'
+                    )
                 )
-            );
+                ->setGender($gender)
+                ->setFirstName($firstname)
+                ->setLastName($faker->lastName)
+                ->setBirthDate($birthDate)
+                ->setSituation($situation)
+                ->setAvatar($picture)
+                ->setProfession($faker->jobTitle)
+                ->setCompany($faker->company)
+                ->setDescription($faker->sentence())
+                ->setIsSubscribed($subscribed);
+
             $manager->persist($user);
         }
 
