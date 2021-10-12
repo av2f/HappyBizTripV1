@@ -50,8 +50,8 @@ class AppFixtures extends Fixture
             $gender = $genders[mt_rand(0, count($genders)-1)];
 
             // generate firstname and avatar following the gender
-            $firstName = ($gender = 'M' ? 
-                $faker->firstName : $faker->firstNameFemale);
+            $firstName = ($gender == 'M' ? 
+                $faker->firstNameMale : $faker->firstNameFemale);
 
             // Generate a picture
             $picture = 'https://randomuser.me/api/portraits/';

@@ -46,18 +46,39 @@
           </ul>
         </li>
       </ul>
+      {# if user already connected #}
       {% if app.user %}
-        <ul class="navbar-nav mr">
+        <ul class="navbar-nav d-flex ps-2">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toogle" href="#" data-bs-toggle="dropdown" id="accountDropdownLink">
-              <img src="{{ asset('img/library/defaultAvatar.png') }}" class="avatar avatar-mini" id="imgAvatarNav" alt="">
+            <a class="nav-link dropdown-toggle" href="#" id="accountDropdownLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src=
+                {% if app.user.avatar is empty %}
+                  "{{ asset('img/library/defaultAvatar.png') }}"
+                {% elseif app.user.avatar starts with 'https:' %}
+                  "{{ app.user.avatar }}"
+                {% else %}
+                  "{{ asset('/uploads/avatars/' ~ app.user.avatar) }}"
+                {% endif %}
+                  class="avatar avatar-mini" id="imgAvatarNav" alt="" alt="{{ 'alt.avatar'|trans|raw }} {{ app.user.firstName }}">
+                  &nbsp;{{ app.user.firstName }}
             </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdownLink">
+              <li><a href="#" class="dropdown-item">{{ 'header.mnu.profile_biztrip'|trans|raw }}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a href="#" class="dropdown-item">{{ 'header.mnu.profile_profile'|trans|raw }}</a></li>
+              <li><a href="#" class="dropdown-item">{{ 'header.mnu.profile_subscription'|trans|raw }}</a></li>
+              <li><a href="#" class="dropdown-item">{{ 'header.mnu.profile_password'|trans|raw }}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a href="{{ path('hbt_logout') }}" class="dropdown-item">{{ 'header.mnu.profile_logout'|trans|raw }}</a></li> 
+            </ul>
           </li>
         </ul>
       {% else %}
+      <div class="ps-2">
         <a href="{{ path('hbt_login') }}">
           <button class="btn btn-outline-hbtDarkBlue btn-sm my-sm-0 shadow-none">{{ 'menu.home.sign_in'|trans|raw }}</button>
         </a>
+      </div>
       {% endif %}
       {# <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

@@ -26,6 +26,30 @@
               <source>home.subtitle</source>
               <target>Make your trip a fun...</target>
             </trans-unit>
+            <trans-unit id="header.mnu.profile_biztrip">
+              <source>header.mnu.profile_biztrip</source>
+              <target>Create a BizTrip</target>
+            </trans-unit>
+            <trans-unit id="header.mnu.profile_profile">
+              <source>header.mnu.profile_profile</source>
+              <target>My profile</target>
+            </trans-unit>
+            <trans-unit id="header.mnu.profile_subscription">
+              <source>header.mnu.profile_subscription</source>
+              <target>My subscription</target>
+            </trans-unit>
+            <trans-unit id="header.mnu.profile_password">
+              <source>header.mnu.profile_password</source>
+              <target>Change my password</target>
+            </trans-unit>
+            <trans-unit id="header.mnu.profile_logout">
+              <source>header.mnu.profile_logout</source>
+              <target>Sign out</target>
+            </trans-unit>
+            <trans-unit id="alt.avatar">
+              <source>alt.avatar</source>
+              <target>Avatar of</target>
+            </trans-unit>
             <trans-unit id="form.register_title">
               <source>form.register_title</source>
               <target>Not registered ?</target>

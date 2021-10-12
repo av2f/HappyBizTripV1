@@ -24,6 +24,7 @@ Encore
     .addStyleEntry('styles/login', './assets/styles/login.scss')
     
     .addEntry('app', './assets/app.js')
+    .addEntry('js/datepicker', './assets/js/datepicker.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
