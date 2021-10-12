@@ -19,10 +19,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  *  message = "user.email.unique"
  * )
  * 
- * @UniqueEntity (
- *  fields = {"slug"}
- * )
- * 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -525,5 +521,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAtDate()
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * Generation of slug with format firstname-id
+     * Using the listener UserEntityListener.php (declared in services.yaml)
+     * use for preUpdate and postPersist
+     * 
+     * @author Parmentier <fparmentier@happybiztrip.com>
+     */
+    public function defineSlug(SluggerInterface $slugger)
+    {
+        if ($this->slug !== $slugger->slug($this->firstName.' '.$this->id)->lower()) {
+            $this->slug = $slugger->slug($this->firstName.' '.$this->id)->lower();
+        }
     }
 }

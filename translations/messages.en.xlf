@@ -94,6 +94,14 @@
               <source>login.password.card_footer</source>
               <target>Password forgotten ?</target>
             </trans-unit>
+            <trans-unit id="account.disabled">
+              <source>account.disabled</source>
+              <target>Your account is locked. to unlock it, please contact us.</target>
+            </trans-unit>
+            <trans-unit id="account.deleted">
+              <source>account.deleted</source>
+              <target>Your account is deleted and is no longer accessible.</target>
+            </trans-unit>
             <trans-unit id="login.error.credential">
               <source>login.error.credential</source>
               <target>

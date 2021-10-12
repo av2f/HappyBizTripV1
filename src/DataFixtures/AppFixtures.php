@@ -25,7 +25,6 @@ class AppFixtures extends Fixture
     {
         $this->passwordHasher = $passwordHasher;
     }
-
     
     public function load(ObjectManager $manager)
     {
@@ -51,7 +50,7 @@ class AppFixtures extends Fixture
             $gender = $genders[mt_rand(0, count($genders)-1)];
 
             // generate firstname and avatar following the gender
-            $firstname = ($gender = 'M' ? 
+            $firstName = ($gender = 'M' ? 
                 $faker->firstName : $faker->firstNameFemale);
 
             // Generate a picture
@@ -73,8 +72,9 @@ class AppFixtures extends Fixture
                     )
                 )
                 ->setGender($gender)
-                ->setFirstName($firstname)
+                ->setFirstName($firstName)
                 ->setLastName($faker->lastName)
+                ->setSlug(strtolower($firstName))
                 ->setBirthDate($birthDate)
                 ->setSituation($situation)
                 ->setAvatar($picture)
@@ -85,7 +85,6 @@ class AppFixtures extends Fixture
 
             $manager->persist($user);
         }
-
-        $manager->flush();
+        $manager->flush();      
     }
 }

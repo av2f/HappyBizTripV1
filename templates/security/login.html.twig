@@ -49,15 +49,22 @@
                         {% set boolFalseEmail = false %}
                         {% set boolFalsePassword = false %}
                         {% if error %}
-                            {% if 'credentials' in error.message %}
-                                {% set boolFalseEmail = true %}
-                            {% endif %}
-                            {% if 'password' in error.message %}
-                                {% set boolFalsePassword = true %}
+                            {% if 'accountDisabled' in error.message %}
+                                {% set msgError = 'account.disabled' %}
+                            {% elseif 'accountDeleted' in error.message %}
+                                {% set msgError = 'account.deleted' %}
+                            {% else %}
+                                {% set msgError = 'login.error.credential' %}
+                                {% if 'credentials' in error.message %}
+                                    {% set boolFalseEmail = true %}
+                                {% endif %}
+                                {% if 'password' in error.message %}
+                                    {% set boolFalsePassword = true %}
+                                {% endif %}
                             {% endif %}
                             <div class="alert alert-danger text-center" role="alert">
                                 <i class="fas fa-exclamation-circle"></i>
-                                {{ 'login.error.credential'|trans|raw }}
+                                {{ msgError|trans|raw }}
                             </div>
                             {# <div class="alert alert-danger text-center" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
                         {% endif %}
