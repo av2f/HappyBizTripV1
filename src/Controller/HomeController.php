@@ -2,17 +2,28 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Form\HomeRegisterType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'homepage')]
+    /**
+     * Home page
+     * 
+     * @Route("/", name="homepage", methods={"POST"})
+     *
+     * @return Response
+     */
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+        $user = new User;
+        $form = $this->createForm(HomeRegisterType::class, $user);
+        
+        return $this->renderForm('home/index.html.twig', [
+            'form' => $form
         ]);
     }
 }

@@ -11,9 +11,15 @@ $(function () {
   if (lang === 'fr') {
     formatDate = 'dd-mm-yyyy'
   }
-  $('.input-daterange input').each(function () {
-    $(this).datepicker({
-      format: 'dd/mm/YYYY'
-    })
+  $('.js-datepicker').datepicker({
+    container: '#date-container',
+    format: formatDate,
+    language: lang,
+    orientation: 'bottom auto',
+    startView: 2,
+    endDate: '-18y',
+    startDate: '-105y',
+    clearBtn: true,
+    autoclose: true
   })
 })

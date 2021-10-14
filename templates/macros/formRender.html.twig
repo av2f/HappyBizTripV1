@@ -7,9 +7,9 @@
 #}
 
 {% macro formFieldRender(field, formName, formType) %}
-  {% set labelName = 'form.label_'~field %}
+  {% set labelName = 'form.label.'~field %}
   {% set labelFor = formType~'_'~field %}
-  <div class="form-group">
+  <div class="form-group mb-3">
     <label for="{{ labelFor }}" class="label-profile">{{ labelName|trans|raw }}</label>
     {{ form_widget(formName) }}
     {% if formName.vars.valid %}
@@ -25,16 +25,14 @@
 {% endmacro %}
 
 {% macro formDateRender(field, formName, formType) %}
-  {% set labelName = 'form.label_'~field %}
+  {% set labelName = 'form.label.'~field %}
   {% set labelFor = formType~'_'~field %}
-  <div class="form-group">
+  <div class="form-group mb-3">
     <label for="{{ labelFor }}"  class='label-profile'>{{ labelName|trans|raw }}</label>
     <div class="input-group" id="date-container">
-      <div class="input-group-prepend">
-          <span class="input-group-text">
-              <i class="far fa-calendar-alt"></i>
-          </span>
-      </div>
+      <span class="input-group-text">
+          <i class="far fa-calendar-alt"></i>
+      </span>
       {{ form_widget(formName)}}
       {% if formName.vars.valid %}
         {{ form_help(formName) }}
@@ -57,9 +55,9 @@
     {% else %}
       {% set numform = 'second' %}
     {% endif %}
-    {% set labelName = 'form.label_'~field~'_'~numform %}
+    {% set labelName = 'form.label.'~field~'_'~numform %}
     {% set labelFor = formType~'_'~field~'_'~numform %}
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="{{ labelFor }}" class="label-profile">{{ labelName|trans|raw }}</label>
       {{ form_widget(formName) }}
       {% if formName.vars.valid %}

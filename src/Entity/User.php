@@ -70,6 +70,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=100)
+     * 
+     * @Assert\NotBlank(
+     *  message="user.firstName.not_blank"
+     * )
+     * @Assert\Length(
+     *  min=2,
+     *  minMessage="user.firstName.length"
+     * )
+     * 
      */
     private $firstName;
 

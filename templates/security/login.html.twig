@@ -1,6 +1,6 @@
 {% extends 'baseLogin.html.twig' %}
 
-{% block title %}{{ 'login.block_title'|trans|raw }}{% endblock %}
+{% block title %}{{ 'login.block.title'|trans|raw }}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('styles/login') }}
@@ -42,7 +42,7 @@
         <div class="d-flex justify-content-center pt-2">
             <div class="card mb-3">
                 <div class="card-header text-white text-center">
-                    <h4>{{ 'login.card_header'|trans|raw }}</h4>
+                    <h4>{{ 'login.card.header'|trans|raw }}</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" novalidate>
@@ -69,7 +69,7 @@
                             {# <div class="alert alert-danger text-center" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
                         {% endif %}
                         <div class="form-group">
-                            <label class="form-label" for "inputEmail">{{ 'form.label_email'|trans|raw }}</label>
+                            <label class="form-label" for "inputEmail">{{ 'form.label.email'|trans|raw }}</label>
                             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control 
                             {% if boolFalseEmail %} is-invalid {% endif %}" required autofocus>
                             {% if boolFalseEmail %}
@@ -79,7 +79,7 @@
                             {% endif %}
                         </div>
                         <div class="form-group mt-4">
-                            <label class="form-label" for "inputPassword">{{ 'form.label_password'|trans|raw }}</label>
+                            <label class="form-label" for "inputPassword">{{ 'form.label.password'|trans|raw }}</label>
                             <input type="password" name="password" id="inputPassword" class="form-control 
                             {% if boolFalsePassword %} is-invalid {% endif %}" required>
                             {% if boolFalsePassword %}
@@ -101,7 +101,7 @@
                         #}
                         <div class="d-grid gap-2 mx-auto mt-4">
                             <button type="submit" class="btn btn-login">
-                                <i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;{{ 'form.btn_login'|trans|raw }}
+                                <i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;{{ 'form.btn.login'|trans|raw }}
                             </button>
                         </div>
                     </form>

@@ -1,7 +1,7 @@
 // style for homepage
 $hbtDarkBlue: #7fadc5;
 $hbtOrange: #f5853b;
-$happyGreen: #b1c18c;
+$hbtGreen: #b1c18c;
 
 .home-jumbo {
   background-color: $hbtDarkBlue;
@@ -32,8 +32,17 @@ $happyGreen: #b1c18c;
 }
 
 .card-header {
-  background-color: $happyGreen;
+  background-color: $hbtGreen;
   color: #ffffff;
+}
+
+.btn-register {
+  background-color: $hbtGreen;
+  color: #ffffff;
+  &:hover {
+      background-color: $hbtOrange;
+      color: #ffffff;
+  }
 }
 
 .concept-title,.pricing-title {

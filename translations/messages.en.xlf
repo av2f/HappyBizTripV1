@@ -6,16 +6,16 @@
               <source>home.block.title</source>
               <target>Welcome</target>
             </trans-unit>
-            <trans-unit id="menu.home_home">
-              <source>menu.home_home</source>
+            <trans-unit id="menu.home.home">
+              <source>menu.home.home</source>
               <target>Home</target>
             </trans-unit>
-            <trans-unit id="menu.home_concept">
-              <source>menu.home_concept</source>
+            <trans-unit id="menu.home.concept">
+              <source>menu.home.concept</source>
               <target>Concept</target>
             </trans-unit>
-            <trans-unit id="menu.home_price">
-              <source>menu.home_price</source>
+            <trans-unit id="menu.home.price">
+              <source>menu.home.price</source>
               <target>Pricing</target>
             </trans-unit>
             <trans-unit id="home.title">
@@ -50,20 +50,36 @@
               <source>alt.avatar</source>
               <target>Avatar of</target>
             </trans-unit>
-            <trans-unit id="form.register_title">
-              <source>form.register_title</source>
+            <trans-unit id="form.register.title">
+              <source>form.register.title</source>
               <target>Not registered ?</target>
             </trans-unit>
-            <trans-unit id="form.register_subtitle">
-              <source>form.register_subtitle</source>
+            <trans-unit id="form.register.subtitle">
+              <source>form.register.subtitle</source>
               <target>It's time to get started ?</target>
             </trans-unit>
-            <trans-unit id="home.concept_title">
-              <source>home.concept_title</source>
+            <trans-unit id="form.btn.register">
+              <source>form.btn.register</source>
+              <target>Register</target>
+            </trans-unit>
+            <trans-unit id="form.label.firstName">
+              <source>form.label.firstName</source>
+              <target>Firstname</target>
+            </trans-unit>
+            <trans-unit id="form.placeholder.firstName">
+              <source>form.placeholder.firstName</source>
+              <target>Your firstname</target>
+            </trans-unit>
+            <trans-unit id="form.help.firstName">
+              <source>form.help.firstName</source>
+              <target>Minimum length : 2 characters</target>
+            </trans-unit>
+            <trans-unit id="home.concept.title">
+              <source>home.concept.title</source>
               <target>The Concept</target>
             </trans-unit>
-             <trans-unit id="home.price_title">
-              <source>home.price_title</source>
+             <trans-unit id="home.price.title">
+              <source>home.price.title</source>
               <target>Pricing</target>
             </trans-unit>
             <trans-unit id="subscription.type_free">
@@ -90,24 +106,44 @@
               <source>subscription.type_permanent</source>
               <target>Permanent</target>
             </trans-unit>
-            <trans-unit id="login.block_title">
-              <source>login.block_title</source>
+            <trans-unit id="login.block.title">
+              <source>login.block.title</source>
               <target>Sign in</target>
             </trans-unit>
-             <trans-unit id="login.card_header">
-              <source>login.card_header</source>
+             <trans-unit id="login.card.header">
+              <source>login.card.header</source>
               <target>Please, sign in</target>
             </trans-unit>
-            <trans-unit id="form.label_email">
-              <source>form.label_email</source>
+            <trans-unit id="form.label.email">
+              <source>form.label.email</source>
               <target>Email address</target>
             </trans-unit>
-            <trans-unit id="form.label_password">
-              <source>form.label_password</source>
+            <trans-unit id="form.placeholder.email">
+              <source>form.placeholder.email</source>
+              <target>Enter your email</target>
+            </trans-unit>
+            <trans-unit id="form.label.birthDate">
+              <source>form.label.birthDate</source>
+              <target>Date of birth</target>
+            </trans-unit>
+            <trans-unit id="form.help.birthDate">
+              <source>form.help.birthDate</source>
+              <target>You must have at least 18</target>
+            </trans-unit>
+            <trans-unit id="form.label.password">
+              <source>form.label.password</source>
               <target>Password</target>
             </trans-unit>
-            <trans-unit id="form.btn_login">
-              <source>form.btn_login</source>
+            <trans-unit id="form.placeholder.password">
+              <source>form.placeholder.password</source>
+              <target>Define a password</target>
+            </trans-unit>
+            <trans-unit id="form.help.password">
+              <source>form.help.password</source>
+              <target>Minimum length : 8 characters</target>
+            </trans-unit>
+            <trans-unit id="form.btn.login">
+              <source>form.btn.login</source>
               <target>Sign in</target>
             </trans-unit>
             <trans-unit id="login.home.card_footer">
