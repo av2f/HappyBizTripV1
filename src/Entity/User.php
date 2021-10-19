@@ -107,7 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $situation;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
 
@@ -499,14 +499,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setInitialUser() 
     {
-        // Avatar
-        if ($this->getAvatar() === "") {
-            $this->setAvatar("defaultAvatar.png");
-        }
-
         // Dates
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+
+        //initial slug
+        $this->setSlug(strtolower($this->getFirstName()));
 
         // boolean variables
         // set isActive to true
