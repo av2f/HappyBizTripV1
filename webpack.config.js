@@ -22,6 +22,7 @@ Encore
      */
     .addStyleEntry('styles/home', './assets/styles/home.scss')
     .addStyleEntry('styles/login', './assets/styles/login.scss')
+    .addStyleEntry('styles/profile', './assets/styles/profile.scss')
     .addStyleEntry('styles/datepicker', './assets/styles/datepicker.css')
     
     .addEntry('app', './assets/app.js')

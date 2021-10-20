@@ -34,6 +34,14 @@
               <source>user.birthDate.blank</source>
               <target>Veuillez renseigner votre date de naissance.</target>
             </trans-unit>
+            <trans-unit id="user.change.password.wrong_value">
+              <source>user.change.password.wrong_value</source>
+              <target>Mot de passe actuel incorrect.</target>
+            </trans-unit>
+            <trans-unit id="user.change.password.match">
+              <source>user.change.password.match</source>
+              <target>Les mots de passe doivent être identiques.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

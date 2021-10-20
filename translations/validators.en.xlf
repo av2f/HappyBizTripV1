@@ -34,6 +34,14 @@
               <source>user.birthDate.not_blank</source>
               <target>Please enter your date of birth.</target>
             </trans-unit>
+            <trans-unit id="user.change.password.wrong_value">
+              <source>user.change.password.wrong_value</source>
+              <target>Invalid current password.</target>
+            </trans-unit>
+            <trans-unit id="user.change.password.match">
+              <source>user.change.password.match</source>
+              <target>Passwords must match.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -196,6 +196,30 @@
               <source>menu.home.sign_in</source>
               <target>Sign in</target>
             </trans-unit>
+            <trans-unit id="user.change.password.wrong_value">
+              <source>user.change.password.wrong_value</source>
+              <target>Invalid current password.</target>
+            </trans-unit>
+            <trans-unit id="changePassword.card_header">
+              <source>changePassword.card_header</source>
+              <target>Change password</target>
+            </trans-unit>
+            <trans-unit id="form.label.oldPassword">
+              <source>form.label.oldPassword</source>
+              <target>Current pasword</target>
+            </trans-unit>
+            <trans-unit id="form.label.newPassword_first">
+              <source>form.label.newPassword_first</source>
+              <target>New password</target>
+            </trans-unit>
+            <trans-unit id="form.label.newPassword_second">
+              <source>form.label.newPassword_second</source>
+              <target>Confirm your password</target>
+            </trans-unit>
+            <trans-unit id="form.btn.validate">
+              <source>form.btn.validate</source>
+              <target>Validate</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

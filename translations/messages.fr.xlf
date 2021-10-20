@@ -196,6 +196,30 @@
               <source>menu.home.sign_in</source>
               <target>Se connecter</target>
             </trans-unit>
+             <trans-unit id="user.change.password.wrong_value">
+              <source>user.change.password.wrong_value</source>
+              <target>Mot de passe actuel incorrect.</target>
+            </trans-unit>
+            <trans-unit id="changePassword.card_header">
+              <source>changePassword.card_header</source>
+              <target>Changement du mot de passe</target>
+            </trans-unit>
+            <trans-unit id="form.label.oldPassword">
+              <source>form.label.oldPassword</source>
+              <target>Mot de passe actuel</target>
+            </trans-unit>
+            <trans-unit id="form.label.newPassword_first">
+              <source>form.label.newPassword_first</source>
+              <target>Nouveau mot de passe</target>
+            </trans-unit>
+            <trans-unit id="form.label.newPassword_second">
+              <source>form.label.newPassword_second</source>
+              <target>Confirmez votre mot de passe</target>
+            </trans-unit>
+            <trans-unit id="form.btn.validate">
+              <source>form.btn.validate</source>
+              <target>Valider</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
