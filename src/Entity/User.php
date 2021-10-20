@@ -543,4 +543,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->slug = $slugger->slug($this->firstName.' '.$this->id)->lower();
         }
     }
+
+    /**
+     * Caclculate age with date of birth
+     * Author : Frederic Parmentier
+     * Created at : 2019/08/07
+     *
+     * @return void
+     */
+    public function getCalculateAge() {
+        $today = new \DateTime('now');
+        $age = $today->diff($this->getBirthDate());
+        return $age->format('%y');
+    }
+
+     /**
+     * Calculate the percentage of completed
+     * 
+     * @ORM\PreUpdate
+     * 
+     */
+    public function computeCompleted() {
+        $TOTAL_USER_OBJECT = 14;
+        // by default, 3 objects fullfiled {firstName/email/Date of Birth}
+        // object password not taken into account
+        $userObjectCompleted=3;
+        $this->getGender() != "" ? $userObjectCompleted++ : "";
+        $this->getLastName() != "" ? $userObjectCompleted++ : "" ;
+        $this->getSituation() != "" ? $userObjectCompleted++ : "" ;
+        $this->getAvatar() != "" ? $userObjectCompleted++ : "" ;
+        $this->getProfession() != "" ? $userObjectCompleted++ : "" ;
+        $this->getCompany() != "" ? $userObjectCompleted++ : "" ;
+        $this->getDescription() != "" ? $userObjectCompleted++ : "" ;
+        // $this->getPhoneNumber() != "" ? $userObjectCompleted++ : "" ;
+        // count($this->getInterests()) != 0 ? $userObjectCompleted++ : "";
+        return $this->completed = round(($userObjectCompleted*100)/$TOTAL_USER_OBJECT);
+    }
 }
