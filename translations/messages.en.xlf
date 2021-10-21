@@ -296,6 +296,118 @@
               <source>feed.solicitations</source>
               <target>New Solicitations</target>
             </trans-unit>
+            <trans-unit id="interest.type.culture">
+              <source>interest.type.culture</source>
+              <target>Culture</target>
+            </trans-unit>
+            <trans-unit id="interest.culture.literature">
+              <source>interest.culture.literature</source>
+              <target>Literature</target>
+            </trans-unit>
+            <trans-unit id="interest.culture.cinema">
+              <source>interest.culture.cinema</source>
+              <target>Movies</target>
+            </trans-unit>
+            <trans-unit id="interest.culture.theater">
+              <source>interest.culture.theater</source>
+              <target>Theater</target>
+            </trans-unit>
+            <trans-unit id="interest.culture.concert">
+              <source>interest.culture.concert</source>
+              <target>Concert/Opera</target>
+            </trans-unit>
+            <trans-unit id="interest.culture.music">
+              <source>interest.culture.music</source>
+              <target>Music</target>
+            </trans-unit>
+            <trans-unit id="interest.culture.art">
+              <source>interest.culture.art</source>
+              <target>Art/History</target>
+            </trans-unit>
+            <trans-unit id="interest.type.science_business">
+              <source>interest.type.science_business</source>
+              <target>Science and Business</target>
+            </trans-unit>
+            <trans-unit id="interest.science.new_tech">
+              <source>interest.science.new_tech</source>
+              <target>New technologies</target>
+            </trans-unit>
+            <trans-unit id="interest.science.sciences">
+              <source>interest.science.sciences</source>
+              <target>Sciences</target>
+            </trans-unit>
+            <trans-unit id="interest.science.politic">
+              <source>interest.science.politic</source>
+              <target>Politic</target>
+            </trans-unit>
+            <trans-unit id="interest.science.business">
+              <source>interest.science.business</source>
+              <target>Entrepreneurship</target>
+            </trans-unit>
+            <trans-unit id="interest.science.finance">
+              <source>interest.science.finance</source>
+              <target>Economy/Finance</target>
+            </trans-unit>
+            <trans-unit id="interest.science.well_being">
+              <source>interest.science.well_being</source>
+              <target>Well-being</target>
+            </trans-unit>
+            <trans-unit id="interest.type.leisure">
+              <source>interest.type.leisure</source>
+              <target>Hobbies</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.sport">
+              <source>interest.leisure.sport</source>
+              <target>Sport</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.animal">
+              <source>interest.leisure.animal</source>
+              <target>Animals</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.fashion">
+              <source>interest.leisure.fashion</source>
+              <target>Fashion</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.art_of_live">
+              <source>interest.leisure.art_of_live</source>
+              <target>Art of living</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.garden">
+              <source>interest.leisure.garden</source>
+              <target>Gardening</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.diy">
+              <source>interest.leisure.diy</source>
+              <target>Do It Yourself</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.board_game">
+              <source>interest.leisure.board_game</source>
+              <target>Board games</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.role_game">
+              <source>interest.leisure.role_game</source>
+              <target>Role games</target>
+            </trans-unit>
+            <trans-unit id="interest.leisure.gambling">
+              <source>interest.leisure.gambling</source>
+              <target>Gambling</target>
+            </trans-unit>
+            <trans-unit id="interest.type.meet">
+              <source>interest.type.meet</source>
+              <target>Meet</target>
+            </trans-unit>
+            <trans-unit id="interest.meet.business">
+              <source>interest.meet.business</source>
+              <target>Professional</target>
+            </trans-unit>
+            <trans-unit id="interest.meet.private_f">
+              <source>interest.meet.private_f</source>
+              <target>Private female</target>
+            </trans-unit>
+            <trans-unit id="interest.meet.private_m">
+              <source>interest.meet.private_m</source>
+              <target>Private male</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

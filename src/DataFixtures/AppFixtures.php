@@ -12,10 +12,12 @@
 namespace App\DataFixtures;
 
 use Faker;
+use DateInterval;
 use App\Entity\User;
+use App\Entity\Interest;
+use App\Entity\InterestType;
 use App\Entity\SubscriptionType;
 use App\Entity\SubscriptionHistory;
-use DateInterval;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -32,6 +34,98 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         
+        // Handle Interest Type and Interests 
+        // interestType
+         $interestType = array(
+            ['nameType' => 'interest.type.culture', 'iconType' => 'fas fa-film'],
+            ['nameType' => 'interest.type.science_business', 'iconType' => 'fas fa-chart-line'],
+            ['nameType' => 'interest.type.leisure', 'iconType' => 'fas fa-puzzle-piece'],
+            ['nameType' => 'interest.type.meet', 'iconType' => 'fas fa-user-friends']
+        );
+
+        // interests
+        $iCulture = array(
+            ['name' => 'interest.culture.literature', 'raw' => '1'],
+            ['name' => 'interest.culture.cinema', 'raw' => '2'],
+            ['name' => 'interest.culture.theater', 'raw' => '3'],
+            ['name' => 'interest.culture.concert', 'raw' => '4'],
+            ['name' => 'interest.culture.music', 'raw' => '5'],
+            ['name' => 'interest.culture.art', 'raw' => '6'],
+        );
+
+        $iScience = array(
+            ['name' => 'interest.science.new_tech', 'raw' => '1'],
+            ['name' => 'interest.science.sciences', 'raw' => '2'],
+            ['name' => 'interest.science.politic', 'raw' => '3'],
+            ['name' => 'interest.science.business', 'raw' => '4'],
+            ['name' => 'interest.science.finance', 'raw' => '5'],
+            ['name' => 'interest.science.well_being', 'raw' => '6']
+        );
+
+        $iLeisure = array(
+            ['name' => 'interest.leisure.sport', 'raw' => '1'],
+            ['name' => 'interest.leisure.animal', 'raw' => '2'],
+            ['name' => 'interest.leisure.fashion', 'raw' => '3'],
+            ['name' => 'interest.leisure.art_of_live', 'raw' => '4'],
+            ['name' => 'interest.leisure.garden', 'raw' => '5'],
+            ['name' => 'interest.leisure.diy', 'raw' => '6'],
+            ['name' => 'interest.leisure.board_game', 'raw' => '7'],
+            ['name' => 'interest.leisure.role_game', 'raw' => '8'],
+            ['name' => 'interest.leisure.gambling', 'raw' => '9']
+        );
+
+        $iMeet = array(
+            ['name' => 'interest.meet.business', 'raw' => '1'],
+            ['name' => 'interest.meet.private_f', 'raw' => '2'],
+            ['name' => 'interest.meet.private_m', 'raw' => '3'],
+        );
+
+        foreach($interestType as $nb => $infos) {
+            $iType = new InterestType();
+            $iType->setNameType($infos['nameType']);
+            $iType->setIconType($infos['iconType']);
+            $manager->persist($iType);
+            switch ($infos['nameType']) {
+                case 'interest.type.culture':
+                    foreach ($iCulture as $nb => $i) {
+                        $interest = new Interest();
+                        $interest->setName($i['name']);
+                        $interest->setRaw($i['raw']);
+                        $interest->setInterestType($iType);
+                        $manager->persist($interest);
+                    }
+                    break;
+                case 'interest.type.science_business':
+                    foreach ($iScience as $nb => $i) {
+                        $interest = new Interest();
+                        $interest->setName($i['name']);
+                        $interest->setRaw($i['raw']);
+                        $interest->setInterestType($iType);
+                        $manager->persist($interest);
+                    }
+                    break;
+                case 'interest.type.leisure':
+                    foreach ($iLeisure as $nb => $i) {
+                        $interest = new Interest();
+                        $interest->setName($i['name']);
+                        $interest->setRaw($i['raw']);
+                        $interest->setInterestType($iType);
+                        $manager->persist($interest);
+                    }
+                    break;
+                case 'interest.type.meet':
+                    foreach ($iMeet as $nb => $i) {
+                        $interest = new Interest();
+                        $interest->setName($i['name']);
+                        $interest->setRaw($i['raw']);
+                        $interest->setInterestType($iType);
+                        $manager->persist($interest);
+                    }
+                    break;
+            }
+        }
+        $manager->flush();
+
         // Subscription Type
         $subType = array(
             ['subscribName' => 'subscription.type.occasional', 'duration' => 1, 'durationType' => 'W', 'price' => 8.99],

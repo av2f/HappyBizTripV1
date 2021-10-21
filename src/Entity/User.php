@@ -183,9 +183,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $subscriptionHistories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Interest::class, inversedBy="users")
+     */
+    private $interests;
+
     public function __construct()
     {
         $this->subscriptionHistories = new ArrayCollection();
+        $this->interests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -651,5 +657,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $dateNow = new \Datetime('now');
         return intval($dateNow->diff($this->subscribEndAt)->format("%a"));
+    }
+
+    /**
+     * @return Collection|Interest[]
+     */
+    public function getInterests(): Collection
+    {
+        return $this->interests;
+    }
+
+    public function addInterest(Interest $interest): self
+    {
+        if (!$this->interests->contains($interest)) {
+            $this->interests[] = $interest;
+        }
+
+        return $this;
+    }
+
+    public function removeInterest(Interest $interest): self
+    {
+        $this->interests->removeElement($interest);
+
+        return $this;
     }
 }
