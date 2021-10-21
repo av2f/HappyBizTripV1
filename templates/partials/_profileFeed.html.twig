@@ -33,34 +33,115 @@
     <hr>
     {% if not user.isSubscribed %}
       {% if last_subscription|length == 0 %}
-        <p class="col-text-profile text-center">{{ 'profile.text_unregister'|trans|raw }}</p>
+        <p class="col-text-profile text-center">{{ 'profile.text.unregister'|trans|raw }}</p>
         <div class="text-center">
             <a href="#">
-                <button type="button" class="btn btn-register btn-sm"><i class="fas fa-route"></i>&nbsp;{{ 'profile.btn_register'|trans|raw }}</button>
+                <button type="button" class="btn btn-register btn-sm"><i class="fas fa-route"></i>&nbsp;{{ 'profile.btn.register'|trans|raw }}</button>
             </a>
         </div>
       {% else %}
         <p class="col-text-profile text-center">
-          {{ 'subscription.expired'|trans|raw }} {{ last_subscription.subscribEndAt|format_datetime('short','none') }}.
+          {{ 'profile.subscription.expired'|trans|raw }} {{ last_subscription.subscribEndAt|format_datetime('short','none') }}.
         </p>
         <div class="text-center">
           <a href="#">
-              <button type="button" class="btn btn-register btn-sm"><i class="fas fa-route"></i>&nbsp;{{ 'profile.btn_renew_register'|trans|raw }}</button>
+              <button type="button" class="btn btn-register btn-sm"><i class="fas fa-route"></i>&nbsp;{{ 'profile.btn.renew_register'|trans|raw }}</button>
           </a>
       </div>
       {% endif %}
   {% else %}
     {# subscribed #}
-    {% for sub in user.subscriptions %}
-      {% set descriptionSubscription1 = 'description.subscription.1_c'|trans|raw %}  
-      {% if sub.subscriberType.type|trans|raw  matches '/^[aeiou].*/i' %} {# is 1st letter a vowel #}
-        {% set descriptionSubscription1 = 'description.subscription.1_v'|trans|raw %}
-      {% endif %}
-      <p class="col-text-profile text-center">
-        {{ descriptionSubscription1 }} <strong>{{ sub.subscriberType.type|trans|raw }}</strong> {{ 'description.subscription.2'|trans|raw}}
-        <strong>{{ sub.subscribEndAt|format_datetime('short','none') }}</strong> ({{ sub.DaysEndOfSubscription }} {{ 'days.left'|trans|raw }})
-      </p>
-    {% endfor %}
+    {% set descriptionSubscription1 = 'description.subscription.1_c'|trans|raw %}
+    {% if user.subscriptionType.subscribName|trans|raw  matches '/^[aeiou].*/i' %} {# is 1st letter a vowel #}
+      {% set descriptionSubscription1 = 'description.subscription.1_v'|trans|raw %}
+    {% endif %}
+    <p class="col-text-profile text-center">
+      {{ descriptionSubscription1 }} <strong>{{ user.subscriptionType.subscribName|trans|raw }}</strong> {{ 'description.subscription.2'|trans|raw}}
+      <strong>{{ user.subscribEndAt|format_datetime('short','none') }}</strong> ({{ user.DaysEndOfSubscription }} {{ 'days.left'|trans|raw }})
+    </p>
   {% endif %}
+  </div>
+</div>
+<div class="card mt-2">
+  <div class="card-header">
+    <div class="text-center">{{ 'feed.title.dashboard'|trans|raw }}</div>
+  </div>
+  <div class="card-body">
+    <div class="row row-dashboard">
+      <div class="col-9">
+        <span class="col-text-profile"><i class="fas fa-plane-departure"></i>&nbsp;{{ 'feed.biztrips'|trans|raw }}</span>
+      </div>
+      <div class="col-3">
+        <span class="col-text-profile float-right badge badge-blue">01</span>
+      </div>
+    </div>
+    <hr>
+    <div class="row row-dashboard">
+      <div class="col-9">
+        <span class="col-text-profile"><i class="fas fa-user-friends"></i>&nbsp;{{ 'feed.happybizfriends'|trans|raw }}</span>
+      </div>
+      <div class="col-3">
+        {# {% if friends > 0 %}<a href="#">{% endif %} #}
+        <a href="#">
+          <span class="col-text-profile float-right badge badge-blue">
+            {# {{ '%02d'|format(friends) }} #}
+            03
+          </span>
+        </a>
+          {# {% if friends > 0 %}</a>{% endif %} #}
+      </div>
+    </div>
+    <hr>
+    <div class="row row-dashboard">
+        <div class="col-9">
+          <span class="col-text-profile"><i class="fas fa-pen-fancy"></i>&nbsp;{{ 'feed.articles'|trans|raw }}</span>
+        </div>
+        <div class="col-3">
+          <a href="#">
+          <span class="col-text-profile float-right badge badge-blue">01</span>
+          </a>
+        </div>
+      </div>
+    <hr>
+    <div class="row row-dashboard">
+      <div class="col-9">
+        <span class="col-text-profile"><i class="fas fa-envelope"></i>&nbsp;{{ 'feed.messages'|trans|raw }}</span>
+      </div>
+      <div class="col-3">
+        <span class="col-text-profile float-right badge badge-blue">01</span>
+      </div>
+    </div>
+    <hr>
+    <div class="row row-dashboard">
+      <div class="col-9">
+        <span class="col-text-profile"><i class="fas fa-eye"></i>&nbsp;{{ 'feed.visits'|trans|raw }}</span>
+      </div>
+      <div class="col-3">
+        {# {% if new_visit > 0 %}<a href="#">{% endif %} #}
+        <a href="#">
+          <span class="col-text-profile float-right badge badge-blue">
+          {# {{ '%02d'|format(new_visit) }} #}
+          05
+          </span>
+        </a>
+        {# {% if new_visit > 0 %}</a>{% endif %} #}
+      </div>
+    </div>
+    <hr>
+    <div class="row row-dashboard">
+      <div class="col-9">
+        <span class="col-text-profile"><i class="fas fa-user-plus"></i>&nbsp;{{ 'feed.solicitations'|trans|raw }}</span>
+      </div>
+      <div class="col-3">
+        {# {% if new_request > 0 %}<a href="#">{% endif %} #}
+        <a href ="#">
+          <span class="col-text-profile float-right badge badge-blue">
+            {# {{ '%02d'|format(new_request) }} #}
+            08
+          </span>
+          {# {% if new_request > 0 %}</a>{% endif %} #}
+        </a>
+      </div>
+    </div>
   </div>
 </div>

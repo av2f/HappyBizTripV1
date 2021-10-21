@@ -14,6 +14,7 @@ namespace App\DataFixtures;
 use Faker;
 use App\Entity\User;
 use App\Entity\SubscriptionType;
+use App\Entity\SubscriptionHistory;
 use DateInterval;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -33,11 +34,11 @@ class AppFixtures extends Fixture
         
         // Subscription Type
         $subType = array(
-            ['subscribName' => 'subscription.type_occasional', 'duration' => 1, 'durationType' => 'W', 'price' => 8.99],
-            ['subscribName' => 'subscription.type_punctual', 'duration' => 1, 'durationType' => 'M', 'price' => 28.99],
-            ['subscribName' => 'subscription.type_temporary', 'duration' => 3, 'durationType' => 'M', 'price' => 75.52],
-            ['subscribName' => 'subscription.type_regular', 'duration' => 6, 'durationType' => 'M', 'price' => 129.46],
-            ['subscribName' => 'subscription.type_permanent', 'duration' => 12, 'durationType' => 'M', 'price' => 215.76]
+            ['subscribName' => 'subscription.type.occasional', 'duration' => 1, 'durationType' => 'W', 'price' => 8.99],
+            ['subscribName' => 'subscription.type.punctual', 'duration' => 1, 'durationType' => 'M', 'price' => 28.99],
+            ['subscribName' => 'subscription.type.temporary', 'duration' => 3, 'durationType' => 'M', 'price' => 75.52],
+            ['subscribName' => 'subscription.type.regular', 'duration' => 6, 'durationType' => 'M', 'price' => 129.46],
+            ['subscribName' => 'subscription.type.permanent', 'duration' => 12, 'durationType' => 'M', 'price' => 215.76]
         );
         $subscriptionTypeArray=[];
         foreach($subType as $nb => $infos) {
@@ -144,7 +145,48 @@ class AppFixtures extends Fixture
                         ->setSubscriptionType($subscription);
             }
             $manager->persist($user);
+
+            // Create subscription history
+            if ($subscribed) {
+                $j = mt_rand(1,5);
+                for ($u=0; $u<=$j; $u++) {
+                    $dateBegin = new \DateTime();
+                    $subscription = $subscriptionTypeArray[mt_rand(0, count($subscriptionTypeArray)-1)];
+                    switch ($subscription->getDurationType()) {
+                        case 'W':
+                            $dateBegin = $faker->dateTimeBetween('-360 days', '-9 days');
+                            break;
+                        case 'M':
+                            switch ($subscription->getDuration()) {
+                                case 1:
+                                    $dateBegin = $faker->dateTimeBetween('-24 months', '-1 month');
+                                    break;
+                                case 3:
+                                    $dateBegin=$faker->dateTimeBetween('-36 months','-3 months');
+                                    break;
+                                case 6:
+                                    $dateBegin=$faker->dateTimeBetween('-60 months','-6 months');
+                                    break;
+                                case 12:
+                                    $dateBegin=$faker->dateTimeBetween('-48 months','-12 months');
+                                    break;
+                            }
+                        break;
+                    }
+                    $dateEnd = clone $dateBegin;
+                    $interval = "P".$subscription->getDuration().$subscription->getDurationType();
+                    $dateEnd->add(new DateInterval($interval));
+                    $subscribe = new SubscriptionHistory();
+                    $subscribe  -> setSubscriber($user)
+                                -> setSubscriptionType($subscription)
+                                ->setSubscribPayAt(\DateTimeImmutable::createFromMutable($dateBegin))
+                                ->setSubscribBeginAt(\DateTimeImmutable::createFromMutable($dateBegin))
+                                ->setSubscribEndAt(\DateTimeImmutable::createFromMutable($dateEnd));
+                    $manager->persist($subscribe);
+                }
+            }
         }
-        $manager->flush();      
+
+        $manager->flush();
     }
 }

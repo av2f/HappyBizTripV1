@@ -82,28 +82,28 @@
               <source>home.price.title</source>
               <target>Pricing</target>
             </trans-unit>
-            <trans-unit id="subscription.type_free">
-              <source>subscription.type_free</source>
+            <trans-unit id="subscription.type.free">
+              <source>subscription.type.free</source>
               <target>Free</target>
             </trans-unit>
-            <trans-unit id="subscription.type_occasional">
-              <source>subscription.type_occasional</source>
+            <trans-unit id="subscription.type.occasional">
+              <source>subscription.type.occasional</source>
               <target>Occasional</target>
             </trans-unit>
-            <trans-unit id="subscription.type_punctual">
-              <source>subscription.type_punctual</source>
+            <trans-unit id="subscription.type.punctual">
+              <source>subscription.type.punctual</source>
               <target>Punctual</target>
             </trans-unit>
-            <trans-unit id="subscription.type_temporary">
-              <source>subscription.type_temporary</source>
+            <trans-unit id="subscription.type.temporary">
+              <source>subscription.type.temporary</source>
               <target>Temporary</target>
             </trans-unit>
-            <trans-unit id="subscription.type_regular">
-              <source>subscription.type_regular</source>
+            <trans-unit id="subscription.type.regular">
+              <source>subscription.type.regular</source>
               <target>Regular</target>
             </trans-unit>
-            <trans-unit id="subscription.type_permanent">
-              <source>subscription.type_permanent</source>
+            <trans-unit id="subscription.type.permanent">
+              <source>subscription.type.permanent</source>
               <target>Permanent</target>
             </trans-unit>
             <trans-unit id="login.block.title">
@@ -235,6 +235,66 @@
             <trans-unit id="profile.completed">
               <source>profile.completed</source>
               <target>Completed at</target>
+            </trans-unit>
+            <trans-unit id="profile.btn.register">
+              <source>profile.btn.register</source>
+              <target>Register</target>
+            </trans-unit>
+            <trans-unit id="profile.text.unregister">
+              <source>profile.text.unregister</source>
+              <target>You have not subscribed to any subscription.</target>
+            </trans-unit>
+            <trans-unit id="profile.subscription.expired">
+              <source>profile.subscription.expired</source>
+              <target>Your subscription has expired since</target>
+            </trans-unit>
+            <trans-unit id="profile.btn.renew_register">
+              <source>profile.btn.renew_register</source>
+              <target>Renew your subscription</target>
+            </trans-unit>
+            <trans-unit id="description.subscription.1_v">
+              <source>description.subscription.1_v</source>
+              <target>You have subscribed to an</target>
+            </trans-unit>
+            <trans-unit id="description.subscription.1_c">
+              <source>description.subscription.1_c</source>
+              <target>You have subscribed to a</target>
+            </trans-unit>
+            <trans-unit id="description.subscription.2">
+              <source>description.subscription.2</source>
+              <target>subscription which expires on</target>
+            </trans-unit>
+            <trans-unit id="days.left">
+              <source>days.left</source>
+              <target>day(s) left</target>
+            </trans-unit>
+            <trans-unit id="feed.title.dashboard">
+              <source>feed.title.dashboard</source>
+              <target>Dashboard</target>
+            </trans-unit>
+            <trans-unit id="feed.biztrips">
+              <source>feed.biztrips</source>
+              <target>My BizTrips</target>
+            </trans-unit>
+            <trans-unit id="feed.happybizfriends">
+              <source>feed.happybizfriends</source>
+              <target>My HappyBizFriends</target>
+            </trans-unit>
+            <trans-unit id="feed.articles">
+              <source>feed.articles</source>
+              <target>My Articles</target>
+            </trans-unit>
+            <trans-unit id="feed.messages">
+              <source>feed.messages</source>
+              <target>New Messages</target>
+            </trans-unit>
+            <trans-unit id="feed.visits">
+              <source>feed.visits</source>
+              <target>New Visits</target>
+            </trans-unit>
+            <trans-unit id="feed.solicitations">
+              <source>feed.solicitations</source>
+              <target>New Solicitations</target>
             </trans-unit>
         </body>
     </file>

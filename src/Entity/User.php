@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -175,6 +177,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\ManyToOne(targetEntity=SubscriptionType::class, inversedBy="users")
      */
     private $subscriptionType;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SubscriptionHistory::class, mappedBy="subscriber")
+     */
+    private $subscriptionHistories;
+
+    public function __construct()
+    {
+        $this->subscriptionHistories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -582,7 +594,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      */
     public function computeCompleted() {
-        $TOTAL_USER_OBJECT = 14;
+        $TOTAL_USER_OBJECT = 12;
         // by default, 3 objects fullfiled {firstName/email/Date of Birth}
         // object password not taken into account
         $userObjectCompleted=3;
@@ -596,5 +608,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->getPhoneNumber() != "" ? $userObjectCompleted++ : "" ;
         // count($this->getInterests()) != 0 ? $userObjectCompleted++ : "";
         return $this->completed = round(($userObjectCompleted*100)/$TOTAL_USER_OBJECT);
+    }
+
+    /**
+     * @return Collection|SubscriptionHistory[]
+     */
+    public function getSubscriptionHistories(): Collection
+    {
+        return $this->subscriptionHistories;
+    }
+
+    public function addSubscriptionHistory(SubscriptionHistory $subscriptionHistory): self
+    {
+        if (!$this->subscriptionHistories->contains($subscriptionHistory)) {
+            $this->subscriptionHistories[] = $subscriptionHistory;
+            $subscriptionHistory->setSubscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscriptionHistory(SubscriptionHistory $subscriptionHistory): self
+    {
+        if ($this->subscriptionHistories->removeElement($subscriptionHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($subscriptionHistory->getSubscriber() === $this) {
+                $subscriptionHistory->setSubscriber(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Calculate number of days remaining before the end of subscription
+     * Author : F. Parmentier
+     * Created At : 2019/08/24
+     *
+     * @return integer|null
+     */
+    public function getDaysEndOfSubscription(): ?int
+    {
+        $dateNow = new \Datetime('now');
+        return intval($dateNow->diff($this->subscribEndAt)->format("%a"));
     }
 }
