@@ -13,6 +13,8 @@ namespace App\DataFixtures;
 
 use Faker;
 use App\Entity\User;
+use App\Entity\SubscriptionType;
+use DateInterval;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -28,6 +30,28 @@ class AppFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        
+        // Subscription Type
+        $subType = array(
+            ['subscribName' => 'subscription.type_occasional', 'duration' => 1, 'durationType' => 'W', 'price' => 8.99],
+            ['subscribName' => 'subscription.type_punctual', 'duration' => 1, 'durationType' => 'M', 'price' => 28.99],
+            ['subscribName' => 'subscription.type_temporary', 'duration' => 3, 'durationType' => 'M', 'price' => 75.52],
+            ['subscribName' => 'subscription.type_regular', 'duration' => 6, 'durationType' => 'M', 'price' => 129.46],
+            ['subscribName' => 'subscription.type_permanent', 'duration' => 12, 'durationType' => 'M', 'price' => 215.76]
+        );
+        $subscriptionTypeArray=[];
+        foreach($subType as $nb => $infos) {
+            $subscripType = new SubscriptionType();
+            $subscripType->setSubscribName($infos['subscribName']);
+            $subscripType->setDuration($infos['duration']);
+            $subscripType->setDurationType($infos['durationType']);
+            $subscripType->setPrice($infos['price']);
+            $manager->persist($subscripType);
+            $subscriptionTypeArray[]=$subscripType;
+        }
+        $manager->flush();
+        
+        // Users
         $NB_USER = 20;
         $faker = Faker\Factory::create('fr_FR');
         // Define genders (W=Woman / M=Man)
@@ -83,6 +107,42 @@ class AppFixtures extends Fixture
                 ->setDescription($faker->sentence())
                 ->setIsSubscribed($subscribed);
 
+            // Manage subscription
+            if ($subscribed) {
+                // if isSubscribed = true
+                $dateBegin = new \DateTime();
+                $subscription = $subscriptionTypeArray[mt_rand(0, count($subscriptionTypeArray)-1)];
+                switch ($subscription->getDurationType()) {
+                    case 'W':
+                        $dateBegin = $faker->dateTimeBetween('-6 days', '-1 day');
+                        break;
+                    case 'M':
+                        switch ($subscription->getDuration()) {
+                            case 1:
+                                $dateBegin = $faker->dateTimeBetween('-20 days', '-3 days');
+                                break;
+                            case 3:
+                                $dateBegin = $faker->dateTimeBetween('-2 months', '-5 days');
+                                break;
+                            case 6:
+                                $dateBegin = $faker->dateTimeBetween('-4 months', '-1 month');
+                                break;
+                            case 12:
+                                $dateBegin = $faker->dateTimeBetween('-18 months', '-28 days');
+                                break;
+                        
+                        }
+                        break;
+                }
+                $dateEnd = clone $dateBegin;
+                $interval = "P".$subscription->getDuration().$subscription->getDurationType();
+                $dateEnd->add(new DateInterval($interval));
+                
+                $user   ->setSubscribPayAt(\DateTimeImmutable::createFromMutable($dateBegin))
+                        ->setSubscribBeginAt(\DateTimeImmutable::createFromMutable($dateBegin))
+                        ->setSubscribEndAt(\DateTimeImmutable::createFromMutable($dateEnd))
+                        ->setSubscriptionType($subscription);
+            }
             $manager->persist($user);
         }
         $manager->flush();      

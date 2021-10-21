@@ -60,7 +60,7 @@ class ProfileController extends AbstractController
                 'update.password.successfull'
             );
 
-            return $this->redirectToRoute('hbt_main');
+            return $this->redirectToRoute('hbt_feed');
         }
 
         return $this->renderForm('profile/changePassword.html.twig', [

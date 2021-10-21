@@ -220,6 +220,22 @@
               <source>form.btn.validate</source>
               <target>Valider</target>
             </trans-unit>
+            <trans-unit id="feed.block.title">
+              <source>feed.block.title</source>
+              <target>Fil d'actualité</target>
+            </trans-unit>
+            <trans-unit id="profile.register.date">
+              <source>profile.register.date</source>
+              <target>Inscrit(e) depuis le</target>
+            </trans-unit>
+            <trans-unit id="profile.age">
+              <source>profile.age</source>
+              <target>ans</target>
+            </trans-unit>
+            <trans-unit id="profile.completed">
+              <source>profile.completed</source>
+              <target>Renseigné à</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

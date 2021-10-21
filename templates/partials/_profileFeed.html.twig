@@ -1,0 +1,66 @@
+<div class="card mt-3">
+  <div class="card-header">
+      <div class="text-center">
+        {# <a href="{{ path('edit_profile', {'slug':user.slug}) }}"> #}
+        <a href="">
+          <img src=
+            {% if user.avatar is empty %}
+              "{{ asset('img/library/defaultAvatar.png') }}"
+            {% elseif user.avatar starts with 'https:' %}
+              "{{ user.avatar }}"
+            {% else %}
+              "{{ asset('/uploads/avatars/' ~ user.avatar) }}"
+            {% endif %}
+            class="avatar avatar-medium" alt="{{ 'alt.avatar'|trans|raw }} {{ user.firstName }}">
+        </a>
+        <h6 class="mt-1">{{ user.firstName }}<h6>
+        <p class="col-text-profile">{{ user.getCalculateAge() }} {{ 'profile.age'|trans|raw }}</p>
+        <p class="col-text-profile">{{ 'profile.register.date'|trans|raw }} {{ user.createdAt|format_datetime('short','none') }}</p>
+      </div>
+  </div>
+  <div class="card-body">
+    <p class="col-text-profile"><i class="far fa-id-card"></i> {{ 'profile.completed'|trans|raw }} {{ user.completed }}%</p>
+    <div class="progress mb-2">
+        {% if user.completed <= 50 %}
+            {% set progressClass = "bg-warning" %}
+        {% elseif user.completed > 50 and user.completed <= 75 %}
+            {% set progressClass = "bg-info" %}
+        {% else %}
+            {% set progressClass = "bg-success" %}
+        {% endif %}
+        <div class="progress-bar {{ progressClass }}" role="progressbar" style="width:{{ user.completed }}%" aria-valuenow="{{ user.completed }}" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <hr>
+    {% if not user.isSubscribed %}
+      {% if last_subscription|length == 0 %}
+        <p class="col-text-profile text-center">{{ 'profile.text_unregister'|trans|raw }}</p>
+        <div class="text-center">
+            <a href="#">
+                <button type="button" class="btn btn-register btn-sm"><i class="fas fa-route"></i>&nbsp;{{ 'profile.btn_register'|trans|raw }}</button>
+            </a>
+        </div>
+      {% else %}
+        <p class="col-text-profile text-center">
+          {{ 'subscription.expired'|trans|raw }} {{ last_subscription.subscribEndAt|format_datetime('short','none') }}.
+        </p>
+        <div class="text-center">
+          <a href="#">
+              <button type="button" class="btn btn-register btn-sm"><i class="fas fa-route"></i>&nbsp;{{ 'profile.btn_renew_register'|trans|raw }}</button>
+          </a>
+      </div>
+      {% endif %}
+  {% else %}
+    {# subscribed #}
+    {% for sub in user.subscriptions %}
+      {% set descriptionSubscription1 = 'description.subscription.1_c'|trans|raw %}  
+      {% if sub.subscriberType.type|trans|raw  matches '/^[aeiou].*/i' %} {# is 1st letter a vowel #}
+        {% set descriptionSubscription1 = 'description.subscription.1_v'|trans|raw %}
+      {% endif %}
+      <p class="col-text-profile text-center">
+        {{ descriptionSubscription1 }} <strong>{{ sub.subscriberType.type|trans|raw }}</strong> {{ 'description.subscription.2'|trans|raw}}
+        <strong>{{ sub.subscribEndAt|format_datetime('short','none') }}</strong> ({{ sub.DaysEndOfSubscription }} {{ 'days.left'|trans|raw }})
+      </p>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>

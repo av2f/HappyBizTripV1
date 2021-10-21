@@ -1,7 +1,7 @@
 <nav id="navhome" class="navbar navbar-expand-lg navbar-light fixed-top">
   {% set pathUrl = 'homepage' %}
   {% if app.user %}
-    {% set pathUrl = 'hbt_main' %}
+    {% set pathUrl = 'hbt_feed' %}
   {% endif %}
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ path(pathUrl) }}">

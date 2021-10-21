@@ -12,6 +12,8 @@ $hbtRed:      #B81A18;
 $happyGreen:  #b1c18c;
 $danger:      #dc3545 !default;
 $info:        #0dcaf0 !default;
+$warning:     #ffc107 !default;
+$success:     #198754 !default;
 
 // Custom Bootstrap
 // Add colors to $theme-colors
@@ -21,7 +23,9 @@ $theme-colors: (
   "hbtOrange":    $hbtOrange,
   "hbtGrey":      $hbtGrey,
   "danger":       $danger,
-  "info":         $info
+  "info":         $info,
+  'warning':      $warning,
+  'success':      $success
 );
 
 // Add font Dancing Script
