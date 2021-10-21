@@ -171,6 +171,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $subscribEndAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SubscriptionType::class, inversedBy="users")
+     */
+    private $subscriptionType;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -542,5 +547,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->slug !== $slugger->slug($this->firstName.' '.$this->id)->lower()) {
             $this->slug = $slugger->slug($this->firstName.' '.$this->id)->lower();
         }
+    }
+
+    public function getSubscriptionType(): ?SubscriptionType
+    {
+        return $this->subscriptionType;
+    }
+
+    public function setSubscriptionType(?SubscriptionType $subscriptionType): self
+    {
+        $this->subscriptionType = $subscriptionType;
+
+        return $this;
     }
 }
