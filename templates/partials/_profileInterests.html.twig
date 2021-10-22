@@ -1,0 +1,37 @@
+{% for interestType in interests_type %}
+    <div class="card mt-2 card-profile">
+        <div class="card-header card-header-profile-interest text-left">
+            <i class="{{ interestType.iconType }}"></i>&nbsp;&nbsp;{{ interestType.nameType|trans|raw }}
+        </div>
+        <div class="card-body text-left">
+            {% set numRow = 0 %}
+            <div class="row">
+            {% for interestName in interests_name %}
+                {% if interestName.interestType.id == interestType.id %}
+                    {% if numRow >= 3 %}
+                        </div> {# end row #}
+                        <div class="row">
+                        {% set numRow = 0 %}
+                    {% endif %}
+                    {% set numRow = (numRow | default(0)) + 1 %}
+                    {# interests checked by user #}
+                    {% set interestChecked="" %}
+                    {% for uInterest in user.interests %}
+                        {% if interestName.id == uInterest.id %}
+                            {% set interestChecked = "checked" %}
+                        {% endif %}
+                    {% endfor %}
+                    {# --- #}
+                    <div class="col-12 col-md col-lg custom-control custom-switch custom-control-inline mb-2">
+                        <input type="checkbox" class="custom-control-input control-interest" id="customSwitch_{{ interestName.id }}" {{ interestChecked }}>
+                        <label class="custom-control-label label-interest" for="customSwitch_{{ interestName.id }}">{{ interestName.name|trans|raw }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% if numRow == 2 %}
+                <div class="col-12 col-md col-lg mb-2"></div>
+            {% endif %}
+            </div> {# end last row #}
+        </div>
+    </div>
+{% endfor %}

@@ -19,32 +19,16 @@ class InterestTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, InterestType::class);
     }
 
-    // /**
-    //  * @return InterestType[] Returns an array of InterestType objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
+     /**
+     * Query to retrieve interest type order by id
+     *
+     * @return void
+     */
+    public function findInterestTypeOrder() {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
             ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?InterestType
-    {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

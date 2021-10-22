@@ -408,6 +408,86 @@
               <source>interest.meet.private_m</source>
               <target>Privée masculine</target>
             </trans-unit>
+            <trans-unit id="profile.title.general_infos">
+              <source>profile.title.general_infos</source>
+              <target>Informations générales</target>
+            </trans-unit>
+            <trans-unit id="form.label.firstname">
+              <source>form.label.firstname</source>
+              <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="form.placeholder?firstname">
+              <source>form.placeholder.firstname</source>
+              <target>Votre prénom</target>
+            </trans-unit>
+            <trans-unit id="form.label.lastname">
+              <source>form.label.lastname</source>
+              <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="form.placeholder.lastname">
+              <source>form.placeholder.lastname</source>
+              <target>Votre nom</target>
+            </trans-unit>
+            <trans-unit id="form.label.phoneNumber">
+              <source>form.label.phoneNumber</source>
+              <target>Téléphone</target>
+            </trans-unit>
+            <trans-unit id="form.placeholder.phoneNumber">
+              <source>form.placeholder.phoneNumber</source>
+              <target> </target>
+            </trans-unit>
+            <trans-unit id="form.label.profession">
+              <source>form.label.profession</source>
+              <target>Profession</target>
+            </trans-unit>
+            <trans-unit id="form.placeholder.profession">
+              <source>form.placeholder.profession</source>
+              <target>Quelle est votre profession ?</target>
+            </trans-unit>
+            <trans-unit id="form.label.company">
+              <source>form.label.company</source>
+              <target>Société</target>
+            </trans-unit>
+            <trans-unit id="form.placeholder.company">
+              <source>form.placeholder.company</source>
+              <target>Où travaillez-vous ?</target>
+            </trans-unit>
+            <trans-unit id="form.label.gender">
+              <source>form.label.gender</source>
+              <target>Je suis</target>
+            </trans-unit>
+            <trans-unit id="form.choice.woman">
+              <source>form.choice.woman</source>
+              <target>Une femme</target>
+            </trans-unit>
+            <trans-unit id="form.choice.man">
+              <source>form.choice.man</source>
+              <target>Un homme</target>
+            </trans-unit>
+            <trans-unit id="form.label.situation">
+              <source>form.label.situation</source>
+              <target>Situation</target>
+            </trans-unit>
+            <trans-unit id="form.choice.couple">
+              <source>form.choice.couple</source>
+              <target>En couple</target>
+            </trans-unit>
+            <trans-unit id="form.choice.single">
+              <source>form.choice.single</source>
+              <target>Célibataire</target>
+            </trans-unit>
+            <trans-unit id="form.choice.keep">
+              <source>form.choice.keep</source>
+              <target>Je le garde pour moi</target>
+            </trans-unit>
+            <trans-unit id="profile.title.description">
+              <source>profile.title.description</source>
+              <target>Décrivez-vous en quelques mots</target>
+            </trans-unit>
+            <trans-unit id="profile.title.interests">
+              <source>profile.title.interests</source>
+              <target>Intérêts</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

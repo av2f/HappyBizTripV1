@@ -78,7 +78,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdownLink">
               <li><a href="#" class="dropdown-item">{{ 'header.mnu.profile_biztrip'|trans|raw }}</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a href="#" class="dropdown-item">{{ 'header.mnu.profile_profile'|trans|raw }}</a></li>
+              <li><a href="{{ path('profile_edit', {'slug':app.user.slug}) }}" class="dropdown-item">{{ 'header.mnu.profile_profile'|trans|raw }}</a></li>
               <li><a href="#" class="dropdown-item">{{ 'header.mnu.profile_subscription'|trans|raw }}</a></li>
               <li><a href="{{ path('profile_password', {'slug':app.user.slug}) }}" class="dropdown-item">{{ 'header.mnu.profile_password'|trans|raw }}</a></li>
               <li><hr class="dropdown-divider"></li>

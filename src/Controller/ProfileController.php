@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\EditProfileType;
+use App\Repository\InterestRepository;
+use App\Repository\InterestTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,6 +68,34 @@ class ProfileController extends AbstractController
 
         return $this->renderForm('profile/changePassword.html.twig', [
             'form' => $form
+        ]);
+    }
+
+    /**
+     * Edit the profile
+     * 
+     * @Route("/profile/{slug}", name="profile_edit", methods={"POST", "GET"})
+     *
+     * @param User $user
+     * @return Response
+     */
+    public function editProfile(
+        User $user,
+        InterestRepository $qInterests,
+        InterestTypeRepository $qInterestsType,
+        Request $resquest ): Response
+    {
+        // Authorization managed by voter
+        $this->denyAccessUnlessGranted('profile_edit', $user);
+
+        // Create the form
+        $form = $this->createForm(EditProfileType::class, $user);
+        
+        return $this->renderForm('profile/editProfile.html.twig', [
+            'user' =>$this->getUser(),
+            'form' => $form,
+            'interests_type' => $qInterestsType->findInterestTypeOrder(),
+            'interests_name' => $qInterests->findInterestOrder()
         ]);
     }
 }

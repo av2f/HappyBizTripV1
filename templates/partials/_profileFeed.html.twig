@@ -1,8 +1,7 @@
 <div class="card mt-3">
   <div class="card-header">
       <div class="text-center">
-        {# <a href="{{ path('edit_profile', {'slug':user.slug}) }}"> #}
-        <a href="">
+        <a href="{{ path('profile_edit', {'slug':user.slug}) }}">
           <img src=
             {% if user.avatar is empty %}
               "{{ asset('img/library/defaultAvatar.png') }}"
