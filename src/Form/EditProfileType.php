@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Form\DataTransformer\DateStringToDateTransformer;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -91,7 +92,7 @@ class EditProfileType extends AbstractType
                 ]
 
             ])
-            // ->add('description')
+            ->add('description', CKEditorType::class)
             ->add('listInterest', HiddenType::class, [
                 'mapped' => false,
                 'attr' => ['id' => 'listInterest']

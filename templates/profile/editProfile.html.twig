@@ -27,8 +27,8 @@
     {# modal window to update avatar
     {% include 'partials/modals/_modalUpdateAvatar.html.twig' %} #}
         
-    {# modal window to confirm deletion of account 
-    {% include 'partials/modals/_modalDeleteProfile.html.twig' %} #}
+    {# modal window to confirm deletion of account #}
+    {% include 'partials/modals/_modalDeleteProfile.html.twig' %}
 
     <div class="d-flex justify-content-center pt-2">
       <div class="card card-profile">
@@ -66,7 +66,7 @@
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="d-flex justify-content-center pt-2">
         <div class="card card-profile mt-2">
-            <div class="card-header" style="font-size: 1rem"><i class="far fa-address-card"></i>  {{ 'profile.title.general_infos'|trans|raw }}</div>
+            <div class="card-header"><i class="far fa-address-card"></i>  {{ 'profile.title.general_infos'|trans|raw }}</div>
             <div class="card-body">
                 {{ form_widget(form.gender) }}
                 {{ form_widget(form.situation) }}
@@ -81,26 +81,26 @@
         </div>
     </div>
     <div class="d-flex justify-content-center pt-2">
-        <div class="card mt-2 card-profile">
-            <div class="card-header text-left"><i class="fas fa-user-edit"></i>  {{ 'profile.title.description'|trans|raw }}</div>
-            <div class="card-body text-left">
-                {# {{ form_widget(form.description)}} #}
+        <div class="card card-profile mt-2">
+            <div class="card-header"><i class="fas fa-user-edit"></i>  {{ 'profile.title.description'|trans|raw }}</div>
+            <div class="card-body">
+                {{ form_widget(form.description)}}
             </div>
         </div>
     </div>
     <div class="d-flex justify-content-center pt-2">
-        <div class="card mt-2 card-profile">
-            <div class="card-header text-left"><i class="fab fa-wpexplorer"></i>  {{ 'profile.title.interests'|trans|raw }}</div>
-            <div class="card-body text-center">
+        <div class="card card-profile mt-2">
+            <div class="card-header"><i class="fab fa-wpexplorer"></i>  {{ 'profile.title.interests'|trans|raw }}</div>
+            <div class="card-body">
                 {% include 'partials/_profileInterests.html.twig' %}
             </div>
         </div>
         {{ form_widget(form.listInterest) }}
     </div>
     <div class="d-flex justify-content-center pt-2 mt-2">
-        <button type="submit" class="btn btn-profile-dark-blue btn-sm mr-2 shadow-none"><i class="far fa-edit"></i>  {{ 'profile.btn_update'|trans|raw }}</button>
-        <button type="button" id="btn-profile-delete" class="btn btn-profile-delete btn-sm shadow-none" data-toggle="modal" data-target="#deleteProfileModal">
-            <i class="far fa-trash-alt"></i>  {{ 'profile.btn_delete'|trans|raw }}
+        <button type="submit" class="btn btn-profile-dark-blue btn-sm me-2 shadow-none"><i class="far fa-edit"></i>  {{ 'profile.btn.update'|trans|raw }}</button>
+        <button type="button" id="btn-profile-delete" class="btn btn-profile-delete btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#deleteProfileModal">
+            <i class="far fa-trash-alt"></i>  {{ 'profile.btn.delete'|trans|raw }}
         </button>
     </div>
     {{ form_end(form) }}
@@ -111,5 +111,5 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('js/datepicker') }}
-    {# {{ encore_entry_script_tags('js/editProfile') }} #}
+    {{ encore_entry_script_tags('js/editProfile') }}
 {% endblock %}

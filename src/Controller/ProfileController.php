@@ -77,6 +77,8 @@ class ProfileController extends AbstractController
      * @Route("/profile/{slug}", name="profile_edit", methods={"POST", "GET"})
      *
      * @param User $user
+     * @param InterestRepository $qInterests
+     * @param InterestTypeRepository $qInterestsType
      * @return Response
      */
     public function editProfile(
@@ -97,5 +99,34 @@ class ProfileController extends AbstractController
             'interests_type' => $qInterestsType->findInterestTypeOrder(),
             'interests_name' => $qInterests->findInterestOrder()
         ]);
+    }
+
+    /**
+     * Delete the profile
+     * 
+     * @Route("/profile/{id}/delete", name="profile_delete", methods={"POST"})
+     *
+     * @param Request $resquest
+     * @param User $user
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function deleteProfile(
+      Request $request,
+      User $user,
+      EntityManagerInterface $entityManager): Response
+    {
+      // Check if user is authorized to delete
+      $this->denyAccessUnlessGranted('profile_delete', $user);
+
+      if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+        return $this->redirectToRoute('profile_edit', ['slug' => $user->getSlug()]);
+      }
+
+      // set isDeleted to yes and logout the user
+      // $user->setIsDeleted(true);
+      // $entityManager->flush();
+
+      return $this->redirectToRoute('hbt_logout');
     }
 }

@@ -1,0 +1,27 @@
+<div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="modalLabel">{{ 'modal.title.account_delete'|trans|raw }}</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="p-modal"><strong>{{ 'generic.warning'|trans|raw }}</strong>, {{ 'modal.account.message_delete1'|trans|raw }}</p>
+        <p class="p-modal"><strong>{{ user.firstName }}</strong>, {{ 'modal.account.message_delete2'|trans|raw }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal-cancel btn-sm shadow-none" data-bs-dismiss="modal">
+          {{ 'btn.cancel'|trans|raw }}
+        </button>
+        <form action="{{ url('profile_delete', {id: user.id}) }}" method="POST" id="delete-form">
+          <input type="hidden" name="token" value="{{ csrf_token('delete') }}">
+          <button type="submit" class="btn btn-modal-confirm btn-sm shadow-none">
+            {{ 'profile.btn_delete'|trans|raw }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

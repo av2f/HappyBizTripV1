@@ -488,6 +488,14 @@
               <source>profile.title.interests</source>
               <target>Intérêts</target>
             </trans-unit>
+            <trans-unit id="profile.btn.update">
+              <source>profile.btn.update</source>
+              <target>Mettre à jour mon profil</target>
+            </trans-unit>
+            <trans-unit id="profile.btn.delete">
+              <source>profile.btn.delete</source>
+              <target>Supprimer mon compte</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
