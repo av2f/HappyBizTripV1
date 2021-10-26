@@ -24,15 +24,15 @@
   </div> #}
 
   <div class="container">
-    {# modal window to update avatar
-    {% include 'partials/modals/_modalUpdateAvatar.html.twig' %} #}
+    {# modal window to update avatar #}
+    {% include 'partials/modals/_modalUpdateAvatar.html.twig' %}
         
     {# modal window to confirm deletion of account #}
     {% include 'partials/modals/_modalDeleteProfile.html.twig' %}
 
     <div class="d-flex justify-content-center pt-2">
       <div class="card card-profile">
-          <div class="card-header card-profile-header-avatar" data-toggle="modal" data-target="#avatarProfileModal">
+          <div class="card-header card-profile-header-avatar" data-bs-toggle="modal" data-bs-target="#avatarProfileModal">
               <div class="update-avatar">
                   <img src=
                       {% if user.avatar is empty %}

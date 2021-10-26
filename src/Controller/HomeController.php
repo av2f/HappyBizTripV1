@@ -31,7 +31,7 @@ class HomeController extends AbstractController
     {
         // If already connected
         if ($this->getUser()) {
-            return $this->redirectToRoute('hbt_main');
+            return $this->redirectToRoute('hbt_feed');
         }
         
         $user = new User;

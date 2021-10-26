@@ -496,6 +496,10 @@
               <source>profile.btn.delete</source>
               <target>Delete my account</target>
             </trans-unit>
+            <trans-unit id="modal.title.modify_avatar">
+              <source>modal.title.modify_avatar</source>
+              <target>My picture</target>
+            </trans-unit>
             <trans-unit id="modal.title.account_delete">
               <source>modal.title.account_delete</source>
               <target>Deletion of your account</target>
@@ -515,6 +519,18 @@
             <trans-unit id="btn.cancel">
               <source>btn.cancel</source>
               <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="btn.change">
+              <source>btn.change</source>
+              <target>Modify</target>
+            </trans-unit>
+            <trans-unit id="btn.delete">
+              <source>btn.delete</source>
+              <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="btn.validate">
+              <source>btn.validate</source>
+              <target>Validate</target>
             </trans-unit>
         </body>
     </file>

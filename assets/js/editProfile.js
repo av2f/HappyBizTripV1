@@ -1,4 +1,4 @@
-// ***** manage interest choices *****
+// ***** Handle interest choices *****
 // initialize value of edit_profile_listInterest
 window.addEventListener('load', () => {
   var arrayListInterest = []
@@ -30,7 +30,16 @@ document.querySelectorAll('.control-interest').forEach(interest =>
     document.getElementById('edit_profile_listInterest').value = listInterest
   })
 )
-// ***** end of manage interest choices *****
+// ***** end of Handle interest choices *****
+
+// ***** Handle of avatar *****
+
+// Load image when modal window is opened
+$('#avatarProfileModal').on('show.bs.modal', () => {
+  document.getElementById('imgModalAvatar').setAttribute('src', document.getElementById('imgAvatarProfile').getAttribute('src'))
+})
+
+// ***** End of Handle avatar *****
 
 // re-position the window when the modal to delete account is closed.
 $('#deleteProfileModal').on('hidden.bs.modal', () => {
