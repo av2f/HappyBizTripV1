@@ -496,6 +496,26 @@
               <source>profile.btn.delete</source>
               <target>Supprimer mon compte</target>
             </trans-unit>
+            <trans-unit id="modal.title.account_delete">
+              <source>modal.title.account_delete</source>
+              <target>Suppression de votre compte</target>
+            </trans-unit>
+            <trans-unit id="modal.account.message_delete1">
+              <source>modal.account.message_delete1</source>
+              <target>La suppression de votre compte est définitive et entraine la perte irréversible de vos données.</target>
+            </trans-unit>
+            <trans-unit id="modal.account.message_delete2">
+              <source>modal.account.message_delete2</source>
+              <target>merci de confirmer la suppression de votre compte.</target>
+            </trans-unit>
+            <trans-unit id="generic.warning">
+              <source>generic.warning</source>
+              <target>Attention</target>
+            </trans-unit>
+            <trans-unit id="btn.cancel">
+              <source>btn.cancel</source>
+              <target>Annuler</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

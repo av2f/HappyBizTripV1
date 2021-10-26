@@ -23,3 +23,8 @@ require('bootstrap')
 // Add Fontawesome
 require('@fortawesome/fontawesome-free/css/all.min.css')
 require('@fortawesome/fontawesome-free/js/all.js')
+
+// Handle Loader which is defined in base.html.twig
+window.addEventListener('load', () => {
+  document.body.removeChild(document.getElementById('loader'))
+})

@@ -135,3 +135,7 @@ $hbtRed: #B81A18;
     font-size: 0.8rem;
     font-weight: normal;
 }
+
+.modal-header-delete, .modal-footer-delete {
+  background-color: $hbtGrey;
+}

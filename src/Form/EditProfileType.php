@@ -69,10 +69,8 @@ class EditProfileType extends AbstractType
             ])
             ->add('birthDate', TextType::class, [
                 'help' => 'form.help.birthDate',
-                'help_attr' => ['class' => 'label-profile'],
+                'help_attr' => ['class' => ' form-date-help label-profile'],
                 'attr' => ['class' => 'js-datepicker form-control-sm'],
-                'help_attr' => ['class' => 'form-date-help']
-
             ])
             ->add('profession', TextType::class, [
                 'label' => 'form.label.profession',

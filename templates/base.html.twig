@@ -9,6 +9,13 @@
         {% endblock %}
     </head>
     <body>
+        {# loader #}
+        <div class="d-flex justify-content-center align-items-center" id="loader">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
         {# include header #}
         {% include 'partials/_header.html.twig' %}
 

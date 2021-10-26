@@ -85,13 +85,40 @@ class ProfileController extends AbstractController
         User $user,
         InterestRepository $qInterests,
         InterestTypeRepository $qInterestsType,
-        Request $resquest ): Response
+        EntityManagerInterface $entityManager,
+        Request $request ): Response
     {
         // Authorization managed by voter
         $this->denyAccessUnlessGranted('profile_edit', $user);
 
         // Create the form
         $form = $this->createForm(EditProfileType::class, $user);
+
+        // Handle the submit
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            // Handle interests
+            // Remove current interests of user
+            $interests = $user->getInterests();
+            foreach($interests as $interest) {
+                $user->removeInterest($interest);
+            }
+
+            // update interests with new list
+            // if there is at least 1 interest in the list
+            if (strlen($form->get('listInterest')->getData()) > 0) {
+                $arrayInterests = explode(';', $form->get('listInterest')->getData());
+                foreach($arrayInterests as $arrayInterest) {
+                    $interest = $qInterests->findOneBy(array('id' => $arrayInterest));
+                    $user->addInterest($interest);
+                }
+            }
+            // Update user
+            $entityManager->flush();
+
+            return $this->redirectToRoute('profile_edit', ['slug' => $user->getSlug()]);
+        }
         
         return $this->renderForm('profile/editProfile.html.twig', [
             'user' =>$this->getUser(),
@@ -123,10 +150,11 @@ class ProfileController extends AbstractController
         return $this->redirectToRoute('profile_edit', ['slug' => $user->getSlug()]);
       }
 
-      // set isDeleted to yes and logout the user
-      // $user->setIsDeleted(true);
-      // $entityManager->flush();
-
+      // Set isDeleted to yes, isActive to no
+      $user->setIsDeleted(true);
+      $user->setIsActive(false);
+      $entityManager->flush();
+      // Logout the user
       return $this->redirectToRoute('hbt_logout');
     }
 }

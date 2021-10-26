@@ -23,8 +23,8 @@
                     {% endfor %}
                     {# --- #}
                     <div class="col-12 col-md col-lg form-check form-switch mb-2">
-                        <input class="form-check-input" type="checkbox" id="customSwitch_{{ interestName.id }}" {{ interestChecked }}>
-                        <label class="form-check-labe label-interest" for "customSwitch_{{ interestName.id }}">{{ interestName.name|trans|raw }}</label>
+                        <input class="form-check-input control-interest" type="checkbox" id="customSwitch_{{ interestName.id }}" {{ interestChecked }}>
+                        <label class="form-check-label label-interest" for "customSwitch_{{ interestName.id }}">{{ interestName.name|trans|raw }}</label>
                     </div>
                 {% endif %}
             {% endfor %}
