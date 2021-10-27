@@ -33,10 +33,41 @@ document.querySelectorAll('.control-interest').forEach(interest =>
 // ***** end of Handle interest choices *****
 
 // ***** Handle of avatar *****
+// Handle of cancel button in modal window
+var btnCancel = false
 
 // Load image when modal window is opened
 $('#avatarProfileModal').on('show.bs.modal', () => {
   document.getElementById('imgModalAvatar').setAttribute('src', document.getElementById('imgAvatarProfile').getAttribute('src'))
+})
+
+// When click on cancel button on modal window
+document.getElementById('btnCancelAvatar').addEventListener('click', () => {
+  if (!btnCancel) { btnCancel = true }
+})
+
+/*  Click delete button on avatar modal windows
+    1. Replace picture by default avatar
+    2. Disabled button delete
+    3. reset the value of input file
+*/
+document.getElementById('btnDelAvatar').addEventListener('click', () => {
+  document.getElementById('imgModalAvatar').setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
+  document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
+  document.getElementById('uploadFile').value = ''
+})
+
+// Click on button Modify
+document.getElementById('btnChangeAvatar').addEventListener('click', () => {
+  document.getElementById('uploadFile').click()
+})
+
+// Handle change of picture
+document.getElementById('uploadFile').addEventListener('change', () => {
+  var fileAvatar = this.files[0]
+  if (fileAvatar) {
+    console.log("je change d'image")
+  }
 })
 
 // ***** End of Handle avatar *****

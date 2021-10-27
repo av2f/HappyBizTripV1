@@ -9,7 +9,15 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+  
+      {# loader #}
+      <div class="d-flex justify-content-center align-items-center" id="loader">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      
+      {% block body %}{% endblock %}
 
         {# include footer #}
         {% include 'partials/_footer.html.twig' %}

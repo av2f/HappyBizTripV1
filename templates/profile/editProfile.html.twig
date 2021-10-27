@@ -40,7 +40,7 @@
                       {% elseif user.avatar starts with 'https:' %}
                           "{{ user.avatar }}"
                       {% else %}
-                          "{{ asset('uploads/avatars/' ~ user.avatar) }}"
+                          "{{ asset('upload/avatars/' ~ user.avatar) }}"
                       {% endif %}
                       class="avatar avatar-large img-avatar" id="imgAvatarProfile" alt="{{ 'alt.avatar'|trans|raw }} {{ user.firstName }}" >
                   <div class="icon-edit">
