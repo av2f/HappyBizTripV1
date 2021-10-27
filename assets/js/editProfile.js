@@ -62,14 +62,6 @@ document.getElementById('btnChangeAvatar').addEventListener('click', () => {
   document.getElementById('uploadFile').click()
 })
 
-// Handle change of picture
-document.getElementById('uploadFile').addEventListener('change', () => {
-  var fileAvatar = this.files[0]
-  if (fileAvatar) {
-    console.log("je change d'image")
-  }
-})
-
 // ***** End of Handle avatar *****
 
 // re-position the window when the modal to delete account is closed.

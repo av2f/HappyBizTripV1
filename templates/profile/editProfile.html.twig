@@ -112,4 +112,19 @@
     {{ parent() }}
     {{ encore_entry_script_tags('js/datepicker') }}
     {{ encore_entry_script_tags('js/editProfile') }}
+    <script>
+      // Handle change of picture
+      const fileInput = document.getElementById('uploadFile')
+      fileInput.addEventListener('change', () => {
+        var fileAvatar = fileInput.files[0]
+        if (fileAvatar) {
+          const reader = new FileReader()
+          reader.addEventListener('load', () => {
+            document.getElementById('imgModalAvatar').setAttribute('src', this.result)
+          })
+          reader.readAsDataURL(fileAvatar)
+        }
+
+      })
+    </script>
 {% endblock %}
