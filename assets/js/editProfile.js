@@ -43,16 +43,25 @@ $('#avatarProfileModal').on('show.bs.modal', () => {
 
 // When click on cancel button on modal window
 document.getElementById('btnCancelAvatar').addEventListener('click', () => {
+  console.log('Click bouton annuler')
+  if (!btnCancel) { btnCancel = true }
+})
+
+// When click on close button on modal window
+document.getElementById('btnCloseButton').addEventListener('click', () => {
+  console.log('click sur bouton close')
   if (!btnCancel) { btnCancel = true }
 })
 
 /*  Click delete button on avatar modal windows
     1. Replace picture by default avatar
-    2. Disabled button delete
-    3. reset the value of input file
+    2. add class 'modal-default-avatar' to reduce size of default avatar
+    3. Disabled button delete
+    4. reset the value of input file
 */
 document.getElementById('btnDelAvatar').addEventListener('click', () => {
   document.getElementById('imgModalAvatar').setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
+  document.getElementById('imgModalAvatar').classList.add('modal-default-avatar')
   document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
   document.getElementById('uploadFile').value = ''
 })
@@ -60,6 +69,36 @@ document.getElementById('btnDelAvatar').addEventListener('click', () => {
 // Click on button Modify
 document.getElementById('btnChangeAvatar').addEventListener('click', () => {
   document.getElementById('uploadFile').click()
+})
+
+// Handle change of picture
+const fileInput = document.getElementById('uploadFile')
+fileInput.addEventListener('change', () => {
+  var fileAvatar = fileInput.files[0]
+  if (fileAvatar) {
+    const reader = new window.FileReader()
+    reader.addEventListener('load', () => {
+      document.getElementById('imgModalAvatar').setAttribute('src', reader.result)
+      /*
+      La condition pour enlever modal-default-avatar & disabled
+      est que l'image précédente est default avatar */
+      // Remove class modal-default-avatar
+      document.getElementById('imgModalAvatar').classList.remove('modal-default-avatar')
+      // reactivate button delete
+      document.getElementById('btnDelAvatar').removeAttribute('disabled')
+      // *** Mettre la condition
+    })
+    reader.readAsDataURL(fileAvatar)
+  }
+})
+
+// When close modal window for avatar
+$('#avatarProfileModal').on('hide.bs.modal', () => {
+  // if closed by validating and not by cancelling
+  if (!btnCancel) {
+    console.log('Je ferme la modale en validant')
+    const imgModalAvatar = document.getElementById('imgModalAvatar').getAttribute('src')
+  }
 })
 
 // ***** End of Handle avatar *****
