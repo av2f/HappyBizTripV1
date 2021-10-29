@@ -33,24 +33,24 @@ document.querySelectorAll('.control-interest').forEach(interest =>
 // ***** end of Handle interest choices *****
 
 // ***** Handle of avatar *****
-// Handle of cancel button in modal window
-var btnCancel = false
+// Define variables
+const defaultAvatar = 'defaultAvatar.png'
+const fileInput = document.getElementById('uploadFile')
+var fileAvatar
 
 // Load image when modal window is opened
 $('#avatarProfileModal').on('show.bs.modal', () => {
   document.getElementById('imgModalAvatar').setAttribute('src', document.getElementById('imgAvatarProfile').getAttribute('src'))
-})
-
-// When click on cancel button on modal window
-document.getElementById('btnCancelAvatar').addEventListener('click', () => {
-  console.log('Click bouton annuler')
-  if (!btnCancel) { btnCancel = true }
-})
-
-// When click on close button on modal window
-document.getElementById('btnCloseButton').addEventListener('click', () => {
-  console.log('click sur bouton close')
-  if (!btnCancel) { btnCancel = true }
+  // Activate delete button if deactivated
+  if (!isButtonActivated(document.getElementById('btnDelAvatar'))) {
+    document.getElementById('btnDelAvatar').removeAttribute('disabled')
+  }
+  // If image = default avatar, disable delete button
+  if (document.getElementById('imgModalAvatar').getAttribute('src').includes(defaultAvatar)) {
+    document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
+  }
+  // Reset input file value
+  fileInput.value = ''
 })
 
 /*  Click delete button on avatar modal windows
@@ -72,33 +72,30 @@ document.getElementById('btnChangeAvatar').addEventListener('click', () => {
 })
 
 // Handle change of picture
-const fileInput = document.getElementById('uploadFile')
 fileInput.addEventListener('change', () => {
-  var fileAvatar = fileInput.files[0]
+  fileAvatar = fileInput.files[0]
   if (fileAvatar) {
     const reader = new window.FileReader()
     reader.addEventListener('load', () => {
+      const previousImage = document.getElementById('imgModalAvatar').getAttribute('src')
       document.getElementById('imgModalAvatar').setAttribute('src', reader.result)
-      /*
-      La condition pour enlever modal-default-avatar & disabled
-      est que l'image précédente est default avatar */
-      // Remove class modal-default-avatar
-      document.getElementById('imgModalAvatar').classList.remove('modal-default-avatar')
-      // reactivate button delete
-      document.getElementById('btnDelAvatar').removeAttribute('disabled')
-      // *** Mettre la condition
+      /* If previous image is default avatar
+        Remove class modal-default-avatar and disabled option
+      */
+      if (previousImage.includes(defaultAvatar)) {
+        document.getElementById('imgModalAvatar').classList.remove('modal-default-avatar')
+        // reactivate button delete
+        document.getElementById('btnDelAvatar').removeAttribute('disabled')
+      }
     })
     reader.readAsDataURL(fileAvatar)
   }
 })
 
-// When close modal window for avatar
-$('#avatarProfileModal').on('hide.bs.modal', () => {
-  // if closed by validating and not by cancelling
-  if (!btnCancel) {
-    console.log('Je ferme la modale en validant')
-    const imgModalAvatar = document.getElementById('imgModalAvatar').getAttribute('src')
-  }
+// When click on Validate button
+document.getElementById('btnValidateAvatar').addEventListener('click', () => {
+  console.log('je valide')
+  const imgModalAvatar = document.getElementById('imgModalAvatar').getAttribute('src')
 })
 
 // ***** End of Handle avatar *****
@@ -109,7 +106,8 @@ $('#deleteProfileModal').on('hidden.bs.modal', () => {
   $('html,body').animate({ scrollTop: 0 }, 300)
 })
 
-/*  update the list of interest checked
+/*
+    Update the list of interest checked
     if action = R, remove the id from the list
     if action = A, add the if in the list
 
@@ -142,4 +140,15 @@ function updateListInterest (listInterest, idToSearch, action) {
   } else {
     return arrayListInterest.join(';')
   }
+}
+
+/*
+  Check if button buttonToCheck is Activated
+*/
+function isButtonActivated (buttonToCheck) {
+  let activated = true
+  if (buttonToCheck.hasAttribute('disabled')) {
+    activated = false
+  }
+  return activated
 }

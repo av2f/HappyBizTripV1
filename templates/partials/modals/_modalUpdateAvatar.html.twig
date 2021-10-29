@@ -18,7 +18,7 @@
               <button type="button" class="btn btn-modal-avatar btn-sm mr-2 shadow-none" id="btnDelAvatar"
                 {% if user.avatar is empty %} disabled{% endif %}>
                 <i class="far fa-trash-alt"></i> {{ 'btn.delete'|trans|raw }}</button>
-              <button type="button" class="btn btn-modal-avatar btn-sm mr-auto shadow-none" data-bs-dismiss="modal">
+              <button type="button" class="btn btn-modal-avatar btn-sm mr-auto shadow-none" data-bs-dismiss="modal" id="btnValidateAvatar">
                   <i class="fas fa-check"></i> {{ 'btn.validate'|trans|raw }}
               </button>
               <button type="button" class="btn btn-modal-avatar btn-sm mr-2 shadow-none" data-bs-dismiss="modal" id="btnCancelAvatar">
