@@ -66,7 +66,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('hbt_feed');
         }
 
-        return $this->renderForm('profile/changePassword.html.twig', [
+        return $this->renderForm('profile/change_password.html.twig', [
             'form' => $form
         ]);
     }
@@ -120,7 +120,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('profile_edit', ['slug' => $user->getSlug()]);
         }
         
-        return $this->renderForm('profile/editProfile.html.twig', [
+        return $this->renderForm('profile/edit_profile.html.twig', [
             'user' =>$this->getUser(),
             'form' => $form,
             'interests_type' => $qInterestsType->findInterestTypeOrder(),

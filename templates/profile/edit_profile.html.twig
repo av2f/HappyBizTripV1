@@ -3,7 +3,7 @@
 {% form_theme form 'partials/_profileChoice.html.twig' %}
 
 {# use macro to customize the render of the form #}
-{% import 'macros/formRender.html.twig' as fieldRender %}
+{% import 'macros/form_render.html.twig' as fieldRender %}
 
 {% block title %} {{ user.firstName }}{% endblock %}
 {% block stylesheets %}
