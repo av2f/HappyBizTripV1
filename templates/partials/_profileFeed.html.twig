@@ -8,7 +8,7 @@
             {% elseif user.avatar starts with 'https:' %}
               "{{ user.avatar }}"
             {% else %}
-              "{{ asset('/uploads/avatars/' ~ user.avatar) }}"
+              "{{ asset('/upload/avatars/' ~ user.avatar) }}"
             {% endif %}
             class="avatar avatar-medium" alt="{{ 'alt.avatar'|trans|raw }} {{ user.firstName }}">
         </a>
