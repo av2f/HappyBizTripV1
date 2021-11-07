@@ -33,7 +33,16 @@
     <div class="p-1"></div>
     <div class="position-relative header-avatar rounded-3" style="height: 170px;">  
       <div class="update-avatar" data-bs-toggle="modal" data-bs-target="#avatarProfileModal">  
-        <img class="position-absolute top-100 start-50 translate-middle avatar img-avatar" src="{{ asset('upload/avatars/' ~ user.avatar) }}">
+        <img class="position-absolute top-100 start-50 translate-middle avatar img-avatar"
+          src=
+            {% if user.avatar is empty %}
+              "{{ asset('img/library/defaultAvatar.png') }}"
+            {% elseif user.avatar starts with 'https:' %}
+              "{{ user.avatar }}"
+            {% else %}
+              "{{ asset('upload/avatars/' ~ user.avatar) }}"
+            {% endif %}
+          id="imgAvatarProfile" alt="{{ 'alt.avatar'|trans|raw }} {{ user.firstName }}">
         <div class="icon-edit">
           <div class="icon-update-avatar"><i class="far fa-edit"></i></div>
         </div>
@@ -42,7 +51,7 @@
       </div>
     </div>
     <div style="height: 130px;"></div>
-
+    
     {# set variable for javascript part #}
     <input type="hidden" id="pictures" data-imgdefaultavatar = "{{ asset('img/library/defaultAvatar.png') }}"
     data-useravatar = "{{ user.avatar }}">

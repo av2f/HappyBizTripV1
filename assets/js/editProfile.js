@@ -1,7 +1,18 @@
 // ***** Handle interest choices *****
 // initialize value of edit_profile_listInterest
 window.addEventListener('DOMContentLoaded', () => {
+  // Define variables for handle of interests
   var arrayListInterest = []
+  // Define variables for handle of avatar
+  const defaultAvatar = 'defaultAvatar.png'
+  const fileInput = document.getElementById('uploadFile')
+  const modalImg = document.getElementById('imgModalAvatar')
+  const firstImage = modalImg.getAttribute('src')
+  var fileAvatar
+  var cropBoxData
+  var canvasData
+  var cropper
+  //
   document.querySelectorAll('.control-interest').forEach(interest => {
     if (interest.checked) {
       // Retrieve id of the interest and store in array
@@ -31,49 +42,36 @@ window.addEventListener('DOMContentLoaded', () => {
   )
   // ***** end of Handle interest choices *****
   // ***** Handle of avatar *****
-  // Define variables
-  const defaultAvatar = 'defaultAvatar.png'
-  const fileInput = document.getElementById('uploadFile')
-  var fileAvatar
-  var cropBoxData
-  var canvasData
-  var cropper
   // handle when show and hide modal
   // On show : atrribute image in modal body
-  // on hide : empty the src of modal image and destroy cropper if exists
-  $('#avatarProfileModal').on('shown.bs.modal', () => {
-    document.getElementById('imgModalAvatar').setAttribute('src', document.getElementById('imgAvatarProfile').getAttribute('src'))
+  // On shown : handle Cropper
+  // on hidden : empty the src of modal image and destroy cropper if exists
+  $('#avatarProfileModal').on('show.bs.modal', () => {
+    modalImg.setAttribute('src', document.getElementById('imgAvatarProfile').getAttribute('src'))
+    if (modalImg.getAttribute('src').includes(defaultAvatar)) {
+      document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
+      modalImg.classList.add('modal-default-avatar')
+    }
+  }).on('shown.bs.modal', () => {
     // Activate delete button if deactivated
     if (!isButtonActivated(document.getElementById('btnDelAvatar'))) {
       document.getElementById('btnDelAvatar').removeAttribute('disabled')
     }
     // If image = default avatar, disable delete button and add class to resize default avatar
-    if (document.getElementById('imgModalAvatar').getAttribute('src').includes(defaultAvatar)) {
-      document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
-      document.getElementById('imgModalAvatar').classList.add('modal-default-avatar')
-    } else {
-      cropper = new Cropper(document.getElementById('imgModalAvatar'), {
-        // autoCropArea: 0.5,
-        aspectRatio: 1,
-        viewMode: 1,
-        ready: function () {
-          // Should set crop box data first here
-          cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData)
-        }
-      })
+    if (!modalImg.getAttribute('src').includes(defaultAvatar)) {
+      cropper = createCropper(modalImg, cropBoxData, canvasData)
     }
     // Reset input file value
     fileInput.value = ''
   }).on('hidden.bs.modal', () => {
-    document.getElementById('imgModalAvatar').setAttribute('src', '')
-    document.getElementById('uploadFile').value = ''
-    console.log(cropper instanceof Cropper)
+    // re-initialize data
     if (cropper instanceof Cropper) {
       cropper.destroy()
       cropper = null
     }
-    console.log('je ferme modal')
-    console.log(cropper instanceof Cropper)
+    modalImg.classList.remove('modal-default-avatar')
+    modalImg.setAttribute('src', '')
+    document.getElementById('uploadFile').value = ''
   })
   //
   /*  Click delete button on avatar modal windows
@@ -84,14 +82,14 @@ window.addEventListener('DOMContentLoaded', () => {
     5. Destroy cropper if exists
   */
   document.getElementById('btnDelAvatar').addEventListener('click', () => {
-    document.getElementById('imgModalAvatar').setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
-    document.getElementById('imgModalAvatar').classList.add('modal-default-avatar')
-    document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
-    document.getElementById('uploadFile').value = ''
     if (cropper instanceof Cropper) {
       cropper.destroy()
       cropper = null
     }
+    modalImg.setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
+    modalImg.classList.add('modal-default-avatar')
+    document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
+    document.getElementById('uploadFile').value = ''
   })
 
   // Click on button Modify
@@ -101,17 +99,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Handle change of picture
   fileInput.addEventListener('change', () => {
+    if (cropper instanceof Cropper) { cropper.reset() }
     fileAvatar = fileInput.files[0]
     if (fileAvatar) {
       const reader = new window.FileReader()
       reader.addEventListener('load', () => {
-        const previousImage = document.getElementById('imgModalAvatar').getAttribute('src')
-        document.getElementById('imgModalAvatar').setAttribute('src', reader.result)
-        /* If previous image is default avatar
-          Remove class modal-default-avatar and disabled option
-        */
+        const previousImage = modalImg.getAttribute('src')
+        modalImg.setAttribute('src', reader.result)
+        if (cropper instanceof Cropper) {
+          cropper.replace(reader.result)
+        } else {
+          cropper = createCropper(modalImg, cropBoxData, canvasData)
+        }
         if (previousImage.includes(defaultAvatar)) {
-          document.getElementById('imgModalAvatar').classList.remove('modal-default-avatar')
+          modalImg.classList.remove('modal-default-avatar')
           // reactivate button delete
           document.getElementById('btnDelAvatar').removeAttribute('disabled')
         }
@@ -122,7 +123,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // When click on Validate button
   document.getElementById('btnValidateAvatar').addEventListener('click', () => {
     console.log('je valide')
-    const imgModalAvatar = document.getElementById('imgModalAvatar').getAttribute('src')
+    const imgModalAvatar = modalImg.getAttribute('src')
+    const cropperImage = cropper.getCroppedCanvas().toDataURL('image/jpeg')
+    console.log(cropperImage)
   })
 
   // ***** End of Handle avatar *****
@@ -179,4 +182,24 @@ function isButtonActivated (buttonToCheck) {
     activated = false
   }
   return activated
+}
+
+/*
+  Create a new cropper instance
+  with options.
+*/
+function createCropper (picture, cropBox, canvas) {
+  const crop = new Cropper(picture, {
+    // autoCropArea: 0.5,
+    movable: false,
+    zoomable: false,
+    rotatable: false,
+    scalable: false,
+    viewMode: 3,
+    ready: function () {
+      // Should set crop box data first here
+      crop.setCropBoxData(cropBox).setCanvasData(canvas)
+    }
+  })
+  return crop
 }
