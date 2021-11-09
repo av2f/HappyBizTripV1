@@ -1,3 +1,6 @@
+// import axios
+import axios from 'axios'
+
 // ***** Handle interest choices *****
 // initialize value of edit_profile_listInterest
 window.addEventListener('DOMContentLoaded', () => {
@@ -7,7 +10,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const defaultAvatar = 'defaultAvatar.png'
   const fileInput = document.getElementById('uploadFile')
   const modalImg = document.getElementById('imgModalAvatar')
-  const firstImage = modalImg.getAttribute('src')
   var fileAvatar
   var cropBoxData
   var canvasData
@@ -48,15 +50,20 @@ window.addEventListener('DOMContentLoaded', () => {
   // on hidden : empty the src of modal image and destroy cropper if exists
   $('#avatarProfileModal').on('show.bs.modal', () => {
     modalImg.setAttribute('src', document.getElementById('imgAvatarProfile').getAttribute('src'))
+    // Handle delete & validate buttons. Deactivate if defaultAvatar, else activate them if deactivated
     if (modalImg.getAttribute('src').includes(defaultAvatar)) {
       document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
+      document.getElementById('btnValidateAvatar').setAttribute('disabled', 'disabled')
       modalImg.classList.add('modal-default-avatar')
+    } else {
+      if (!isButtonActivated(document.getElementById('btnDelAvatar'))) {
+        document.getElementById('btnDelAvatar').removeAttribute('disabled')
+      }
+      if (!isButtonActivated(document.getElementById('btnValidateAvatar'))) {
+        document.getElementById('btnValidateAvatar').removeAttribute('disabled')
+      }
     }
   }).on('shown.bs.modal', () => {
-    // Activate delete button if deactivated
-    if (!isButtonActivated(document.getElementById('btnDelAvatar'))) {
-      document.getElementById('btnDelAvatar').removeAttribute('disabled')
-    }
     // If image = default avatar, disable delete button and add class to resize default avatar
     if (!modalImg.getAttribute('src').includes(defaultAvatar)) {
       cropper = createCropper(modalImg, cropBoxData, canvasData)
@@ -77,7 +84,8 @@ window.addEventListener('DOMContentLoaded', () => {
   /*  Click delete button on avatar modal windows
     1. Replace picture by default avatar
     2. add class 'modal-default-avatar' to reduce size of default avatar
-    3. Disabled button delete
+    3. Disable button delete
+    4. Disable button validate
     4. reset the value of input file
     5. Destroy cropper if exists
   */
@@ -89,6 +97,7 @@ window.addEventListener('DOMContentLoaded', () => {
     modalImg.setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
     modalImg.classList.add('modal-default-avatar')
     document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
+    document.getElementById('btnValidateAvatar').setAttribute('disabled', 'disabled')
     document.getElementById('uploadFile').value = ''
   })
 
@@ -113,19 +122,47 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         if (previousImage.includes(defaultAvatar)) {
           modalImg.classList.remove('modal-default-avatar')
-          // reactivate button delete
+          // Reactivate buttons delete & Validate
           document.getElementById('btnDelAvatar').removeAttribute('disabled')
+          document.getElementById('btnValidateAvatar').removeAttribute('disabled')
         }
       })
       reader.readAsDataURL(fileAvatar)
     }
   })
   // When click on Validate button
-  document.getElementById('btnValidateAvatar').addEventListener('click', () => {
-    console.log('je valide')
-    const imgModalAvatar = modalImg.getAttribute('src')
-    const cropperImage = cropper.getCroppedCanvas().toDataURL('image/jpeg')
-    console.log(cropperImage)
+  document.getElementById('btnValidateAvatar').addEventListener('click', (event) => {
+    event.preventDefault()
+    const cropperImage = cropper.getCroppedCanvas()
+    cropperImage.toBlob(function (blob) {
+      const inputUpdateAvatar = document.getElementById('input-update-avatar') // Token
+      const data = new FormData()
+      data.append('_token', inputUpdateAvatar.dataset.token)
+      // if avatar deleted, delete file image in avatars directory
+      if (fileInput.value === '') {
+        data.append('image', document.getElementById('pictures').dataset.useravatar)
+        data.append('action', 'delete')
+      } else {
+        data.append('image', blob)
+        data.append('action', 'update')
+      }
+      axios({
+        method: 'post',
+        url: inputUpdateAvatar.getAttribute('data-ref'),
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          enctype: 'multipart/form-data'
+        },
+        data: data
+      })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      console.log(blob)
+    })
   })
 
   // ***** End of Handle avatar *****
