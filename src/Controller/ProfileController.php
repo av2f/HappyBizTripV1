@@ -8,6 +8,8 @@ use App\Form\EditProfileType;
 use App\Repository\InterestRepository;
 use App\Repository\InterestTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\ImageOptimizer;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -170,11 +172,13 @@ class ProfileController extends AbstractController
    *
    * @param User $user
    * @param EntityManagerInterface $entityManager
+   * @param ImageOptimizer $ImageOptimize
    * @return void
    */
   function updateAvatar(
     User $user,
-    EntityManagerInterface $entityManager)
+    EntityManagerInterface $entityManager,
+    ImageOptimizer $imageOptimizer)
   {
     // Authorization managed by voter
     // Check if user is authorized to update
@@ -184,8 +188,10 @@ class ProfileController extends AbstractController
 
     if (isset($_POST['_token'])) {
       if ($this->isCsrfTokenValid('token_'.$user->getId(), $_POST['_token'])) {
+        
         $avatarDir = $this->getParameter('dir_store_avatar');
         $currentAvatarFile = $user->getAvatar();
+        
         if ($_POST['action'] === 'update') {
           // update avatar image if file is not empty
           if (!empty($_FILES['image'])) {
@@ -196,20 +202,27 @@ class ProfileController extends AbstractController
             }
             // UPLOAD_ERR_OK
             if ($_FILES['image']['error'] === 0) {
+              // Create new UploadedFile instance
               $fileImg = new UploadedFile($_FILES['image']['tmp_name'], $_FILES['image']['name'], $_FILES['image']['type']);
-              // ****** Gérer que le nom soit unique, utiliser sha1 ou md5?
-              $fileDest = md5(uniqid('', true)) . '.' . $fileImg->guessClientExtension();
-              var_dump($fileDest);
-              die();
-              // $fileDest = md5(uniqid('')) . "." . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-              // Check if file already exists. If Yes, rename it
-              if (file_exists($avatarDir.$fileDest)) {
-                $fileDest = md5(uniqid('', true)) . "." . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+              // Create target unique file
+              $exist = true;
+              while ($exist) {
+                $fileDest = sha1(uniqid('')) . '.' . $fileImg->guessClientExtension();
+                if (!file_exists($avatarDir.$fileDest)) {
+                  $exist = false;
+                }
               }
               // Move file
-              if (move_uploaded_file($_FILES['image']['tmp_name'], $avatarDir.$fileDest)) {
+              try {
+                $fileImg->move($avatarDir, $fileDest);
+              } catch (Exception $e) {
+                echo($e->getMessage());  
+                //A GERE avec UNE REPONSE JSON
+                var_dump($e->getMessage());
+                die();
+              }
                 // Optimize image
-                // ...
+                $imageOptimizer->resize($avatarDir.$fileDest, 600, 600);
                 // Store new image in database
                 $user->setAvatar($fileDest);
                 $entityManager->flush();
@@ -218,7 +231,6 @@ class ProfileController extends AbstractController
                 // return success response
                 return new JsonResponse([
                   'success' => '1'], 200);
-              }
             }
             // UPLOAD_ERR_INI_SIZE : size of image exceeds upload_max_filesize
             elseif ($_FILES['image']['error'] === 1) {

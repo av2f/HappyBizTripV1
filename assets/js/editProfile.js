@@ -85,7 +85,6 @@ window.addEventListener('DOMContentLoaded', () => {
     1. Replace picture by default avatar
     2. add class 'modal-default-avatar' to reduce size of default avatar
     3. Disable button delete
-    4. Disable button validate
     4. reset the value of input file
     5. Destroy cropper if exists
   */
@@ -97,7 +96,6 @@ window.addEventListener('DOMContentLoaded', () => {
     modalImg.setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
     modalImg.classList.add('modal-default-avatar')
     document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
-    document.getElementById('btnValidateAvatar').setAttribute('disabled', 'disabled')
     document.getElementById('uploadFile').value = ''
   })
 
