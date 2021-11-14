@@ -1,5 +1,7 @@
 // import axios
 import axios from 'axios'
+// Import cropper
+import Cropper from 'cropperjs'
 
 // ***** Handle interest choices *****
 // initialize value of edit_profile_listInterest
@@ -78,7 +80,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     modalImg.classList.remove('modal-default-avatar')
     modalImg.setAttribute('src', '')
-    document.getElementById('uploadFile').value = ''
   })
   //
   /*  Click delete button on avatar modal windows
@@ -96,12 +97,12 @@ window.addEventListener('DOMContentLoaded', () => {
     modalImg.setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
     modalImg.classList.add('modal-default-avatar')
     document.getElementById('btnDelAvatar').setAttribute('disabled', 'disabled')
-    document.getElementById('uploadFile').value = ''
+    fileInput.value = ''
   })
 
   // Click on button Modify
   document.getElementById('btnChangeAvatar').addEventListener('click', () => {
-    document.getElementById('uploadFile').click()
+    fileInput.click()
   })
 
   // Handle change of picture
@@ -129,38 +130,89 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   })
   // When click on Validate button
-  document.getElementById('btnValidateAvatar').addEventListener('click', (event) => {
-    event.preventDefault()
-    const cropperImage = cropper.getCroppedCanvas()
-    cropperImage.toBlob(function (blob) {
-      const inputUpdateAvatar = document.getElementById('input-update-avatar') // Token
-      const data = new FormData()
-      data.append('_token', inputUpdateAvatar.dataset.token)
-      // if avatar deleted, delete file image in avatars directory
-      if (fileInput.value === '') {
-        data.append('image', document.getElementById('pictures').dataset.useravatar)
-        data.append('action', 'delete')
-      } else {
-        data.append('image', blob)
-        data.append('action', 'update')
-      }
+  document.getElementById('btnValidateAvatar').addEventListener('click', () => {
+    handleLoader(true)
+    const inputUpdateAvatar = document.getElementById('input-update-avatar') // Token
+    var msgError = ''
+    const formData = new FormData()
+    formData.append('_token', inputUpdateAvatar.dataset.token)
+    // if Default avatar
+    if (modalImg.getAttribute('src').includes(defaultAvatar)) {
+      // delete the current avatar and replace by the default
       axios({
         method: 'post',
-        url: inputUpdateAvatar.getAttribute('data-ref'),
+        url: inputUpdateAvatar.getAttribute('data-delurl'),
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
           enctype: 'multipart/form-data'
         },
-        data: data
+        data: formData
       })
         .then(function (response) {
-          console.log(response)
+          if (response.data.success) {
+            // change menu and profile avatars
+            document.getElementById('imgAvatarNav').setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
+            document.getElementById('imgAvatarProfile').setAttribute('src', document.getElementById('pictures').dataset.imgdefaultavatar)
+          } else {
+            switch (response.data.error) {
+              case '2':
+                msgError = document.getElementById('msgerr').dataset.errone
+                break
+              default:
+                msgError = document.getElementById('msgerr').dataset.errone
+                break
+            }
+            console.log(msgError)
+            // flashy error message
+          }
         })
         .catch(function (error) {
+          // flashy error
           console.log(error)
         })
-      console.log(blob)
-    })
+    // if new CroppedCanvas
+    } else {
+      const cropperImage = cropper.getCroppedCanvas()
+      cropperImage.toBlob(function (blob) {
+        formData.append('image', blob)
+        axios({
+          method: 'post',
+          url: inputUpdateAvatar.getAttribute('data-ref'),
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            enctype: 'multipart/form-data'
+          },
+          data: formData
+        })
+          .then(function (response) {
+            if (response.data.success) {
+              // Replace menu and profile image by the new
+              const newImage = document.getElementById('pathavatar').dataset.path + response.data.success
+              document.getElementById('imgAvatarNav').setAttribute('src', newImage)
+              document.getElementById('imgAvatarProfile').setAttribute('src', newImage)
+            } else {
+              switch (response.data.error) {
+                case '2':
+                  msgError = document.getElementById('msgerr').dataset.errone
+                  break
+                case '3':
+                  msgError = document.getElementById('msgerr').dataset.errtwo
+                  break
+                default:
+                  msgError = document.getElementById('msgerr').dataset.errone
+                  break
+              }
+              console.log(msgError)
+              // Flashy error message
+            }
+          })
+          .catch(function (error) {
+            // flashy error
+            console.log(error)
+          })
+      }, 'image/jpeg', 1)
+    }
+    handleLoader(false)
   })
 
   // ***** End of Handle avatar *****
@@ -237,4 +289,17 @@ function createCropper (picture, cropBox, canvas) {
     }
   })
   return crop
+}
+
+/*
+  Activate or deactivate the load spinner
+*/
+function handleLoader (activate) {
+  if (activate) {
+    document.querySelector('.load-spinner').setAttribute('id', 'loader')
+    document.getElementById('spinner').style.display = 'block'
+  } else {
+    document.querySelector('.load-spinner').setAttribute('id', 'unload')
+    document.getElementById('spinner').style.display = 'none'
+  }
 }

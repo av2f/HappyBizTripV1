@@ -107,8 +107,9 @@ body {
 }
 
 .avatar {
-  max-width: 256px;
-  max-height: 256px;
+  max-width: 224px;
+  max-height: 224px;
+  // clip-path: ellipse(45% 45% at 50% 50%);
   border-radius: 50%;
 
   &.avatar-large {

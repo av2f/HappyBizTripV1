@@ -10,6 +10,7 @@ use App\Repository\InterestTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\ImageOptimizer;
 use Exception;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -166,9 +167,9 @@ class ProfileController extends AbstractController
    * Update the image of avatar
    * Store the new image in $avatarDir
    * Update in database
-   * if action is deleted, remove the old image in $avatarDir if exists
+   * Remove the old image in $avatarDir if exists
    * 
-   * @Route("/profile/{id}/avatar", name="update_avatar", methods={"POST"})
+   * @Route("/profile/{id}/updavatar", name="update_avatar", methods={"POST"})
    *
    * @param User $user
    * @param EntityManagerInterface $entityManager
@@ -184,96 +185,103 @@ class ProfileController extends AbstractController
     // Check if user is authorized to update
     $this->denyAccessUnlessGranted('profile_edit', $user);
 
-    $MAX_FILE_SIZE = 5242880; // 5Mo Octets max
+    $MAX_FILE_SIZE = 6291456; // 6Mo for file uploaded 
+    $MAX_FILE_SIZE_OPTIMIZED = 3145728; // 3Mo Octets max after optimized
 
-    if (isset($_POST['_token'])) {
-      if ($this->isCsrfTokenValid('token_'.$user->getId(), $_POST['_token'])) {
-        
-        $avatarDir = $this->getParameter('dir_store_avatar');
-        $currentAvatarFile = $user->getAvatar();
-        
-        if ($_POST['action'] === 'update') {
-          // update avatar image if file is not empty
-          if (!empty($_FILES['image'])) {
-            // if image exceeds allowed size
-            if ($_FILES['image']['size'] > $MAX_FILE_SIZE) {
-              return new JsonResponse([
-                'error' => '4'], 400);
-            }
-            // UPLOAD_ERR_OK
-            if ($_FILES['image']['error'] === 0) {
-              // Create new UploadedFile instance
-              $fileImg = new UploadedFile($_FILES['image']['tmp_name'], $_FILES['image']['name'], $_FILES['image']['type']);
-              // Create target unique file
-              $exist = true;
-              while ($exist) {
-                $fileDest = sha1(uniqid('')) . '.' . $fileImg->guessClientExtension();
-                if (!file_exists($avatarDir.$fileDest)) {
-                  $exist = false;
-                }
-              }
-              // Move file
-              try {
-                $fileImg->move($avatarDir, $fileDest);
-              } catch (Exception $e) {
-                echo($e->getMessage());  
-                //A GERE avec UNE REPONSE JSON
-                var_dump($e->getMessage());
-                die();
-              }
-                // Optimize image
-                $imageOptimizer->resize($avatarDir.$fileDest, 600, 600);
-                // Store new image in database
-                $user->setAvatar($fileDest);
-                $entityManager->flush();
-                // Delete Old Image
-                if (!empty($currentAvatarFile) && file_exists($avatarDir.$currentAvatarFile)) unlink($avatarDir.$currentAvatarFile);
-                // return success response
-                return new JsonResponse([
-                  'success' => '1'], 200);
-            }
-            // UPLOAD_ERR_INI_SIZE : size of image exceeds upload_max_filesize
-            elseif ($_FILES['image']['error'] === 1) {
-              return new JsonResponse([
-                'error' => '4'], 400);
-            }
-            else {
-              // return error
-              return new JsonResponse([
-                'error' => '2'], 400);
-            }
-          }
-          else {
-            // return error
-            return new JsonResponse([
-              'error' => '2'], 400);
-          }
-        }
-        elseif ($_POST['action'] === 'delete') {
-          // Remove image from database
-          $user->setAvatar('');
-          $entityManager->flush();
-          // delete image from $avatarDir
-          if (!empty($currentAvatarFile) && file_exists($avatarDir.$currentAvatarFile)) unlink($avatarDir.$currentAvatarFile);
-          // Return success response
-          return new JsonResponse([
-            'success' => '1'], 200);
-        }
-        else {
-          // Return error
-          return new JsonResponse([
-            'error' => '2'], 400);
-        }
-      }
-      else {
-        // Return error
+    if (isset($_POST['_token']) && $this->isCsrfTokenValid('token_'.$user->getId(), $_POST['_token'])) {
+      // UPLOAD_ERR_INI_SIZE : size of image exceeds upload_max_filesize
+      // or file size is upper than $MAX_FILE_SIZE
+      if ($_FILES['image']['error'] === 1 || $_FILES['image']['size'] > $MAX_FILE_SIZE) {
         return new JsonResponse([
           'error' => '3'], 400);
       }
+      // UPLOAD_ERR_OK
+      elseif (!empty($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        $avatarDir = $this ->getParameter('dir_store_avatar');
+        $currentAvatarFile = $user->getAvatar();
+        // Create new UploadedFile instance
+        $fileImg = new UploadedFile($_FILES['image']['tmp_name'], $_FILES['image']['name'], $_FILES['image']['type']);
+        // Create target unique file
+        $boolExist = true;
+        while ($boolExist) {
+          $fileDest = sha1(uniqid('')) . '.' . $fileImg->guessClientExtension();
+          if (!file_exists($avatarDir.$fileDest)) {
+            $boolExist = false;
+          }
+        }
+        // Move file
+        try {
+          $fileImg->move($avatarDir, $fileDest);
+        } catch (Exception $e) {
+          // return error
+          return new JsonResponse([
+            'error' => '2'], 400);
+        }
+        // Optimize image
+        $imageOptimizer->resize($avatarDir.$fileDest, 600, 600);
+        // if size of image is more than $MAX_FILE_SIZE_OPTIMIZED
+        // return error message and delete the file
+        if (filesize($avatarDir.$fileDest) > $MAX_FILE_SIZE_OPTIMIZED) {
+          unlink($avatarDir.$fileDest);
+          return new JsonResponse([
+            'error' => '3'], 400);
+        } 
+        // Store new image in database
+        $user->setAvatar($fileDest);
+        $entityManager->flush();
+        // Delete Old Image
+        if (!empty($currentAvatarFile) && file_exists($avatarDir.$currentAvatarFile)) unlink($avatarDir.$currentAvatarFile);
+        // return success response
+        return new JsonResponse([
+          'success' => $fileDest], 200);
+      }
+      else {
+        // return error
+        return new JsonResponse([
+          'error' => '2'], 400);
+      }
     }
     else {
+      // return error
       return new JsonResponse([
-        'Error' => '3'], 400);
+        'error' => '2'], 400);
+    }
+  }
+
+  /**
+   * Delete the image of avatar
+   * Update in database
+   * Remove the old image in $avatarDir if exists
+   * 
+   * @Route("/profile/{id}/delavatar", name="delete_avatar", methods={"POST"})
+   *
+   * @param User $user
+   * @param EntityManagerInterface $entityManager
+   * @return void
+   */
+  function deleteAvatar(
+    User $user, EntityManagerInterface $entityManager
+    )
+  {
+    // Authorization managed by voter
+    // Check if user is authorized to update
+    $this->denyAccessUnlessGranted('profile_edit', $user);
+    if (isset($_POST['_token']) && $this->isCsrfTokenValid('token_'.$user->getId(), $_POST['_token'])) {
+      $avatarDir = $this ->getParameter('dir_store_avatar');
+      $currentAvatarFile = $user->getAvatar();
+      // remove old image from database
+      $user->setAvatar('');
+      $entityManager->flush();
+      // delete old avatar
+      if (!empty($currentAvatarFile) && file_exists($avatarDir.$currentAvatarFile)) unlink($avatarDir.$currentAvatarFile);
+      // return success response
+      return new JsonResponse([
+          'success' => '1'], 200);
+    } else {
+      // Return error
+      return new JsonResponse([
+        'error' => '2'], 400
+      );
     }
   }
 }

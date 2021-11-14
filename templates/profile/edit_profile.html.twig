@@ -17,12 +17,12 @@
   {# define max size of file uploaded (for error message) #}
   {% set MAX_FILE_SIZE = "5Mb" %}
   
-  {# loader
+  {# loader #}
   <div class="d-flex justify-content-center align-items-center load-spinner" id="unload">
-    <div class="spinner-grow text-primary" role="status" id="spinner" style="display:none;"> 
-        <span class="sr-only">Loading...</span>
+    <div class="spinner-grow text-secondary" role="status" id="spinner" style="width: 3rem; height: 3rem; display:none">
+        <span class="visually-hidden">Loading...</span>
     </div>
-  </div> #}
+  </div>
 
   <div class="container">
     {# modal window to update avatar #}
@@ -46,18 +46,20 @@
         <div class="icon-edit">
           <div class="icon-update-avatar"><i class="far fa-edit"></i></div>
         </div>
+        {# data-ref to update avatar, data-delurl to delete avatar #}
         <input type="hidden" id="input-update-avatar" name="token" data-token="{{ csrf_token('token_' ~ user.id) }}"
-          data-ref="{{ path('update_avatar', {'id': user.id}) }}">
+          data-ref="{{ path('update_avatar', {'id': user.id}) }}"
+          data-delurl="{{ path('delete_avatar', {'id': user.id}) }}">
       </div>
     </div>
-    <div style="height: 130px;"></div>
-    
+    <div style="height: 120px;"></div>
+
     {# set variable for javascript part #}
-    <input type="hidden" id="pictures" data-imgdefaultavatar = "{{ asset('img/library/defaultAvatar.png') }}"
+    <input type="hidden" id="pictures" data-imgdefaultavatar="{{ asset('img/library/defaultAvatar.png') }}"
     data-useravatar = "{{ user.avatar }}">
-    <input type="hidden" id="msgerr" data-errone = "{{ 'update.avatar.msg.error_1'|trans|raw }}"
-    data-errtwo = "{{ 'update.avatar.msg.error_2'|trans|raw }}"
-    data-errthree = "{{ 'update.avatar.msg.error_3'|trans({ '%maxFileSize%': MAX_FILE_SIZE })|raw }}">
+    <input type="hidden" id="msgerr" data-errone = "{{ 'update.avatar.err1'|trans|raw }}"
+    data-errtwo = "{{ 'update.avatar.err2'|trans({ '%maxFileSize%': MAX_FILE_SIZE })|raw }}">
+    <input type="hidden" id="pathavatar" data-path="{{ asset('upload/avatars/') }}">
     <input type="hidden" id="language" data-lang = "{{ app.request.locale }}">
     {# end of set variable #}
 
@@ -104,12 +106,10 @@
     </div>
     {{ form_end(form) }}
   </div>
-
 {% endblock %}
 
 {% block javascripts %}
   {{ parent() }}
-  {{ encore_entry_script_tags('js/cropper') }}
   {{ encore_entry_script_tags('js/datepicker') }}
   {{ encore_entry_script_tags('js/editprofile') }}
 {% endblock %}
