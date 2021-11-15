@@ -70,7 +70,7 @@
                 {% elseif app.user.avatar starts with 'https:' %}
                   "{{ app.user.avatar }}"
                 {% else %}
-                  "{{ asset('/uploads/avatars/' ~ app.user.avatar) }}"
+                  "{{ asset('/upload/avatars/' ~ app.user.avatar) }}"
                 {% endif %}
                   class="avatar avatar-mini" id="imgAvatarNav" alt="" alt="{{ 'alt.avatar'|trans|raw }} {{ app.user.firstName }}">
                   &nbsp;{{ app.user.firstName }}

@@ -10,23 +10,21 @@ $hbtGrey:     #f5f5f5;
 $hbtDarkGrey: #a0a0a0;
 $hbtRed:      #B81A18;
 $happyGreen:  #b1c18c;
-$danger:      #dc3545 !default;
-$info:        #0dcaf0 !default;
-$warning:     #ffc107 !default;
-$success:     #198754 !default;
+
+// import functions & variables to merge custom theme
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
 
 // Custom Bootstrap
 // Add colors to $theme-colors
 // See file ~bootstrap/scss/_variables.scss
-$theme-colors: (
+$custom-theme-colors: (
   "hbtDarkBlue":  $hbtDarkBlue,
   "hbtOrange":    $hbtOrange,
   "hbtGrey":      $hbtGrey,
-  "danger":       $danger,
-  "info":         $info,
-  'warning':      $warning,
-  'success':      $success
 );
+
+$theme-colors: map-merge($custom-theme-colors, $theme-colors);
 
 // Add font Dancing Script
 @font-face {
@@ -109,8 +107,9 @@ body {
 }
 
 .avatar {
-  max-width: 256px;
-  max-height: 256px;
+  max-width: 224px;
+  max-height: 224px;
+  // clip-path: ellipse(45% 45% at 50% 50%);
   border-radius: 50%;
 
   &.avatar-large {

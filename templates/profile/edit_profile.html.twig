@@ -7,21 +7,22 @@
 
 {% block title %} {{ user.firstName }}{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('styles/profile') }}
-    {{ encore_entry_link_tags('styles/datepicker') }}
+  {{ parent() }}
+  {{ encore_entry_link_tags('styles/cropper') }}
+  {{ encore_entry_link_tags('styles/datepicker') }}
+  {{ encore_entry_link_tags('styles/profile') }}
 {% endblock %}
 
 {% block body %}
   {# define max size of file uploaded (for error message) #}
   {% set MAX_FILE_SIZE = "5Mb" %}
   
-  {# loader
+  {# loader #}
   <div class="d-flex justify-content-center align-items-center load-spinner" id="unload">
-    <div class="spinner-grow text-primary" role="status" id="spinner" style="display:none;"> 
-        <span class="sr-only">Loading...</span>
+    <div class="spinner-grow text-secondary" role="status" id="spinner" style="width: 3rem; height: 3rem; display:none">
+        <span class="visually-hidden">Loading...</span>
     </div>
-  </div> #}
+  </div>
 
   <div class="container">
     {# modal window to update avatar #}
@@ -29,36 +30,36 @@
         
     {# modal window to confirm deletion of account #}
     {% include 'partials/modals/_modalDeleteProfile.html.twig' %}
-
-    <div class="d-flex justify-content-center pt-2">
-      <div class="card card-profile">
-          <div class="card-header card-profile-header-avatar" data-bs-toggle="modal" data-bs-target="#avatarProfileModal">
-              <div class="update-avatar">
-                  <img src=
-                      {% if user.avatar is empty %}
-                          "{{ asset('img/library/defaultAvatar.png') }}"
-                      {% elseif user.avatar starts with 'https:' %}
-                          "{{ user.avatar }}"
-                      {% else %}
-                          "{{ asset('upload/avatars/' ~ user.avatar) }}"
-                      {% endif %}
-                      class="avatar avatar-large img-avatar" id="imgAvatarProfile" alt="{{ 'alt.avatar'|trans|raw }} {{ user.firstName }}" >
-                  <div class="icon-edit">
-                      <div class="update-icon-avatar"><i class="far fa-edit"></i></div>
-                  </div>
-                  <input type="hidden" id="input-update-avatar" name="token" data-token="{{ csrf_token('tok' ~ user.id) }}">
-                  {# data-ref="{{ path('update_avatar', {'id': user.id}) }}"> #}
-              </div>
-          </div>
+    <div class="p-1"></div>
+    <div class="position-relative header-avatar rounded-3" style="height: 170px;">  
+      <div class="update-avatar" data-bs-toggle="modal" data-bs-target="#avatarProfileModal">  
+        <img class="position-absolute top-100 start-50 translate-middle avatar img-avatar"
+          src=
+            {% if user.avatar is empty %}
+              "{{ asset('img/library/defaultAvatar.png') }}"
+            {% elseif user.avatar starts with 'https:' %}
+              "{{ user.avatar }}"
+            {% else %}
+              "{{ asset('upload/avatars/' ~ user.avatar) }}"
+            {% endif %}
+          id="imgAvatarProfile" alt="{{ 'alt.avatar'|trans|raw }} {{ user.firstName }}">
+        <div class="icon-edit">
+          <div class="icon-update-avatar"><i class="far fa-edit"></i></div>
+        </div>
+        {# data-ref to update avatar, data-delurl to delete avatar #}
+        <input type="hidden" id="input-update-avatar" name="token" data-token="{{ csrf_token('token_' ~ user.id) }}"
+          data-ref="{{ path('update_avatar', {'id': user.id}) }}"
+          data-delurl="{{ path('delete_avatar', {'id': user.id}) }}">
       </div>
     </div>
+    <div style="height: 120px;"></div>
 
     {# set variable for javascript part #}
-    <input type="hidden" id="pictures" data-imgdefaultavatar = "{{ asset('img/library/defaultAvatar.png') }}"
+    <input type="hidden" id="pictures" data-imgdefaultavatar="{{ asset('img/library/defaultAvatar.png') }}"
     data-useravatar = "{{ user.avatar }}">
-    <input type="hidden" id="msgerr" data-errone = "{{ 'update.avatar.msg.error_1'|trans|raw }}"
-    data-errtwo = "{{ 'update.avatar.msg.error_2'|trans|raw }}"
-    data-errthree = "{{ 'update.avatar.msg.error_3'|trans({ '%maxFileSize%': MAX_FILE_SIZE })|raw }}">
+    <input type="hidden" id="msgerr" data-errone = "{{ 'update.avatar.err1'|trans|raw }}"
+    data-errtwo = "{{ 'update.avatar.err2'|trans({ '%maxFileSize%': MAX_FILE_SIZE })|raw }}">
+    <input type="hidden" id="pathavatar" data-path="{{ asset('upload/avatars/') }}">
     <input type="hidden" id="language" data-lang = "{{ app.request.locale }}">
     {# end of set variable #}
 
@@ -66,50 +67,49 @@
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="d-flex justify-content-center pt-2">
         <div class="card card-profile mt-2">
-            <div class="card-header"><i class="far fa-address-card"></i>  {{ 'profile.title.general_infos'|trans|raw }}</div>
-            <div class="card-body">
-                {{ form_widget(form.gender) }}
-                {{ form_widget(form.situation) }}
-                {{ form_row(form.firstName) }}
-                {{ form_row(form.lastName) }}
-                {{ fieldRender.formFieldRender('email', form.email, 'profile') }}
-                {{ fieldRender.formDateRender('birthDate', form.birthDate, 'profile') }}
-                {# {{ form_row(form.phoneNumber) }} #}
-                {{ form_row(form.profession) }}
-                {{ form_row(form.company) }}
-            </div>
+          <div class="card-header"><i class="far fa-address-card"></i>  {{ 'profile.title.general_infos'|trans|raw }}</div>
+          <div class="card-body">
+            {{ form_widget(form.gender) }}
+            {{ form_widget(form.situation) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ fieldRender.formFieldRender('email', form.email, 'profile') }}
+            {{ fieldRender.formDateRender('birthDate', form.birthDate, 'profile') }}
+            {# {{ form_row(form.phoneNumber) }} #}
+            {{ form_row(form.profession) }}
+            {{ form_row(form.company) }}
+          </div>
         </div>
     </div>
     <div class="d-flex justify-content-center pt-2">
-        <div class="card card-profile mt-2">
-            <div class="card-header"><i class="fas fa-user-edit"></i>  {{ 'profile.title.description'|trans|raw }}</div>
-            <div class="card-body">
-                {{ form_widget(form.description)}}
-            </div>
+      <div class="card card-profile mt-2">
+        <div class="card-header"><i class="fas fa-user-edit"></i>  {{ 'profile.title.description'|trans|raw }}</div>
+        <div class="card-body">
+            {{ form_widget(form.description)}}
         </div>
+      </div>
     </div>
     <div class="d-flex justify-content-center pt-2">
-        <div class="card card-profile mt-2">
-            <div class="card-header"><i class="fab fa-wpexplorer"></i>  {{ 'profile.title.interests'|trans|raw }}</div>
-            <div class="card-body">
-                {% include 'partials/_profileInterests.html.twig' %}
-            </div>
+      <div class="card card-profile mt-2">
+        <div class="card-header"><i class="fab fa-wpexplorer"></i>  {{ 'profile.title.interests'|trans|raw }}</div>
+        <div class="card-body">
+            {% include 'partials/_profileInterests.html.twig' %}
         </div>
-        {{ form_widget(form.listInterest) }}
+      </div>
+      {{ form_widget(form.listInterest) }}
     </div>
     <div class="d-flex justify-content-center pt-2 mt-2">
-        <button type="submit" class="btn btn-profile-dark-blue btn-sm me-2 shadow-none"><i class="far fa-edit"></i>  {{ 'profile.btn.update'|trans|raw }}</button>
-        <button type="button" id="btn-profile-delete" class="btn btn-profile-delete btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#deleteProfileModal">
-            <i class="far fa-trash-alt"></i>  {{ 'profile.btn.delete'|trans|raw }}
-        </button>
+      <button type="submit" class="btn btn-profile-dark-blue btn-sm me-2 shadow-none"><i class="far fa-edit"></i>  {{ 'profile.btn.update'|trans|raw }}</button>
+      <button type="button" id="btn-profile-delete" class="btn btn-profile-delete btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#deleteProfileModal">
+          <i class="far fa-trash-alt"></i>  {{ 'profile.btn.delete'|trans|raw }}
+      </button>
     </div>
     {{ form_end(form) }}
   </div>
-
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('js/datepicker') }}
-    {{ encore_entry_script_tags('js/editprofile') }}
+  {{ parent() }}
+  {{ encore_entry_script_tags('js/datepicker') }}
+  {{ encore_entry_script_tags('js/editprofile') }}
 {% endblock %}
