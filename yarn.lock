@@ -938,6 +938,11 @@
   resolved "https://registry.yarnpkg.com/@stimulus/webpack-helpers/-/webpack-helpers-2.0.0.tgz#54296d2a2dffd4f962d2e802d99a3fdd84b8845f"
   integrity sha512-D6tJWsAC024MwGEIKlUVYU8Ln87mlrmiwHvYAjipg+s8H4eLxUMQ3PZkWyPevfipH+oR3leuHsjYsK1gN5ViQA==
 
+"@sweetalert2/theme-dark@^5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/theme-dark/-/theme-dark-5.0.7.tgz#c6f336b77bb3663c350a140dc063bdf1c6a9a27f"
+  integrity sha512-bpCePN9R48VRGWdfbfDqTAH1w3Ip4zytYQtxSI+5FRwhCfbrTMCd9u++2x6NcCyf2tKOVnipX1ZUMlXOujkeyA==
+
 "@symfony/stimulus-bridge@^2.0.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@symfony/stimulus-bridge/-/stimulus-bridge-2.1.0.tgz#d5cf8c29847fd42f40a8a6464e057a1def05ced9"
@@ -4412,6 +4417,11 @@ svgo@^2.3.0:
     csso "^4.2.0"
     nanocolors "^0.1.12"
     stable "^0.1.8"
+
+sweetalert2@^11.1.10:
+  version "11.1.10"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.1.10.tgz#184968f58ffdbe4f09dcd546dde3aef52d2058b6"
+  integrity sha512-Zy/Pdsvf6gJoaqnBaLXYrjElJ85ipe9D5FfcSKxJ0b1PPnTS3B5eC3rFB2pPbo9m1p+LVLBZVvE35JPL2vG6xA==
 
 tapable@^2.1.1, tapable@^2.2.0:
   version "2.2.1"

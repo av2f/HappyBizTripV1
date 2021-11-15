@@ -26,6 +26,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "ckeditor4": "^4.16.2"
+        "@sweetalert2/theme-dark": "^5.0.7",
+        "ckeditor4": "^4.16.2",
+        "sweetalert2": "^11.1.10"
     }
 }

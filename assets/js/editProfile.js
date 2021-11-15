@@ -2,6 +2,8 @@
 import axios from 'axios'
 // Import cropper
 import Cropper from 'cropperjs'
+// import sweetalert2
+import Swal from 'sweetalert2/src/sweetalert2.js'
 
 // ***** Handle interest choices *****
 // initialize value of edit_profile_listInterest
@@ -162,13 +164,25 @@ window.addEventListener('DOMContentLoaded', () => {
                 msgError = document.getElementById('msgerr').dataset.errone
                 break
             }
-            console.log(msgError)
-            // flashy error message
+            // Show toast notification
+            Swal.fire({
+              title: 'Oups!',
+              text: msgError,
+              icon: 'error',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#7fadc5'
+            })
           }
         })
         .catch(function (error) {
           // flashy error
-          console.log(error)
+          Swal.fire({
+            title: 'Oups!',
+            text: error,
+            icon: 'error',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#7fadc5'
+          })
         })
     // if new CroppedCanvas
     } else {
@@ -202,13 +216,23 @@ window.addEventListener('DOMContentLoaded', () => {
                   msgError = document.getElementById('msgerr').dataset.errone
                   break
               }
-              console.log(msgError)
-              // Flashy error message
+              Swal.fire({
+                title: 'Oups!',
+                text: msgError,
+                icon: 'error',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#7fadc5'
+              })
             }
           })
           .catch(function (error) {
-            // flashy error
-            console.log(error)
+            Swal.fire({
+              title: 'Oups!',
+              text: error,
+              icon: 'error',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: '#7fadc5'
+            })
           })
       }, 'image/jpeg', 1)
     }

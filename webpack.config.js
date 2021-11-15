@@ -36,6 +36,7 @@ Encore
     .addStyleEntry('styles/feed', './assets/styles/feed.scss')
     .addStyleEntry('styles/datepicker', './assets/styles/datepicker.css')
     .addStyleEntry('styles/cropper', './assets/styles/cropper.css')
+    .addStyleEntry('styles/sweetalert2', './assets/styles/sweetalert2.scss')
     
     .addEntry('app', './assets/app.js')
     .addEntry('js/datepicker', './assets/js/datepicker.js')
