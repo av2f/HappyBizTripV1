@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% form_theme form 'partials/_profileChoice.html.twig' %}
+{% form_theme form 'partials/_profile_choice.html.twig' %}
 
 {# use macro to customize the render of the form #}
 {% import 'macros/form_render.html.twig' as fieldRender %}
@@ -27,10 +27,9 @@
 
   <div class="container">
     {# modal window to update avatar #}
-    {% include 'partials/modals/_modalUpdateAvatar.html.twig' %}
-        
+    {% include 'partials/modals/_modal_update_avatar.html.twig' %}   
     {# modal window to confirm deletion of account #}
-    {% include 'partials/modals/_modalDeleteProfile.html.twig' %}
+    {% include 'partials/modals/_modal_delete_profile.html.twig' %}
     <div class="p-1"></div>
     <div class="position-relative header-avatar rounded-3" style="height: 170px;">  
       <div class="update-avatar" data-bs-toggle="modal" data-bs-target="#avatarProfileModal">  
@@ -94,7 +93,7 @@
       <div class="card card-profile mt-2">
         <div class="card-header"><i class="fab fa-wpexplorer"></i>  {{ 'profile.title.interests'|trans|raw }}</div>
         <div class="card-body">
-            {% include 'partials/_profileInterests.html.twig' %}
+            {% include 'partials/_profile_interests.html.twig' %}
         </div>
       </div>
       {{ form_widget(form.listInterest) }}

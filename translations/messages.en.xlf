@@ -538,7 +538,11 @@
             </trans-unit>
             <trans-unit id="update.avatar.err2">
               <source>update.avatar.err2</source>
-              <target>Your file size exceeds the limit ({maxFileSize}).</target>
+              <target>Your file size exceeds the limit (%maxFileSize%).</target>
+            </trans-unit>
+            <trans-unit id="welcome">
+              <source>welcome</source>
+              <target>Welcome to HappyBizTrip %firstname% !</target>
             </trans-unit>
         </body>
     </file>

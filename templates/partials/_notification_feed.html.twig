@@ -1,0 +1,14 @@
+{# Toast notification if 1st login after registration #}
+{% if (app.session.flashbag.peek('success')|length > 0) %}
+  <input type="hidden" id="toast" data-icon="success"
+    data-message="{{ 'welcome'|trans({ '%firstname%': user.firstName })|raw }}">
+{% endif %}
+
+{# Notification if end of subscription <= 15 days #}
+{% if (app.session.flashbag.peek('warning')|length > 0) %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Attention!</strong> Votre abonnement expire bientôt.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endif %}
+

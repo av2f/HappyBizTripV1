@@ -54,7 +54,7 @@ class HomeController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'registration.message_successfull'
+                'welcome'
             );
 
             // if no error, authentication successfully, redirect to main page
