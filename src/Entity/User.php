@@ -188,6 +188,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $interests;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $lastLogin;
+
     public function __construct()
     {
         $this->subscriptionHistories = new ArrayCollection();
@@ -679,6 +689,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeInterest(Interest $interest): self
     {
         $this->interests->removeElement($interest);
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(\DateTimeInterface $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

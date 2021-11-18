@@ -195,12 +195,14 @@ class AppFixtures extends Fixture
         ->setLastName($faker->lastName)
         ->setSlug(strtolower($firstName))
         ->setBirthDate($birthDate)
+        ->setPhoneNumber($faker->PhoneNumber())
         ->setSituation($situation)
         ->setAvatar($picture)
         ->setProfession($faker->jobTitle)
         ->setCompany($faker->company)
         ->setDescription($faker->sentence())
-        ->setIsSubscribed($subscribed);
+        ->setIsSubscribed($subscribed)
+        ->setLastLogin(new \DateTime());
 
       // Manage subscription
       if ($subscribed) {
