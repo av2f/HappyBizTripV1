@@ -10,7 +10,6 @@ use App\Repository\InterestTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\ImageOptimizer;
 use Exception;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

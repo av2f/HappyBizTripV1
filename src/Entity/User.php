@@ -66,11 +66,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=1, nullable=true)
-     */
-    private $gender;
-
-    /**
      * @ORM\Column(type="string", length=100)
      * 
      * @Assert\NotBlank(
@@ -104,29 +99,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $birthDate;
 
     /**
-     * @ORM\Column(type="string", length=1, nullable=true)
-     */
-    private $situation;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $profession;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $company;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
 
     /**
      * @ORM\Column(type="boolean")
@@ -189,14 +164,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $interests;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $phoneNumber;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $lastLogin;
+
+    /**
+     * @ORM\OneToOne(targetEntity=UserInfo::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $userInfo;
 
     public function __construct()
     {
@@ -293,18 +268,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getGender(): ?string
-    {
-        return $this->gender;
-    }
-
-    public function setGender(?string $gender): self
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -353,18 +316,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getSituation(): ?string
-    {
-        return $this->situation;
-    }
-
-    public function setSituation(?string $situation): self
-    {
-        $this->situation = $situation;
-
-        return $this;
-    }
-
     public function getAvatar(): ?string
     {
         return $this->avatar;
@@ -373,42 +324,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(string $avatar): self
     {
         $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getProfession(): ?string
-    {
-        return $this->profession;
-    }
-
-    public function setProfession(?string $profession): self
-    {
-        $this->profession = $profession;
-
-        return $this;
-    }
-
-    public function getCompany(): ?string
-    {
-        return $this->company;
-    }
-
-    public function setCompany(?string $company): self
-    {
-        $this->company = $company;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -587,7 +502,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->subscriptionType = $subscriptionType;
 
         return $this;
-    
     }
     
     /**
@@ -602,30 +516,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $age = $today->diff($this->getBirthDate());
         return $age->format('%y');
     }
-
-     /**
-     * Calculate the percentage of completed
-     * 
-     * @ORM\PreUpdate
-     * 
-     */
-    public function computeCompleted() {
-        $TOTAL_USER_OBJECT = 12;
-        // by default, 3 objects fullfiled {firstName/email/Date of Birth}
-        // object password not taken into account
-        $userObjectCompleted=3;
-        $this->getGender() != "" ? $userObjectCompleted++ : "";
-        $this->getLastName() != "" ? $userObjectCompleted++ : "" ;
-        $this->getSituation() != "" ? $userObjectCompleted++ : "" ;
-        $this->getAvatar() != "" ? $userObjectCompleted++ : "" ;
-        $this->getProfession() != "" ? $userObjectCompleted++ : "" ;
-        $this->getCompany() != "" ? $userObjectCompleted++ : "" ;
-        $this->getDescription() != "" ? $userObjectCompleted++ : "" ;
-        // $this->getPhoneNumber() != "" ? $userObjectCompleted++ : "" ;
-        // count($this->getInterests()) != 0 ? $userObjectCompleted++ : "";
-        return $this->completed = round(($userObjectCompleted*100)/$TOTAL_USER_OBJECT);
-    }
-
+    
     /**
      * @return Collection|SubscriptionHistory[]
      */
@@ -693,18 +584,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(?string $phoneNumber): self
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
     public function getLastLogin(): ?\DateTimeInterface
     {
         return $this->lastLogin;
@@ -713,6 +592,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLogin(\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function getUserInfo(): ?UserInfo
+    {
+        return $this->userInfo;
+    }
+
+    public function setUserInfo(?UserInfo $userInfo): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($userInfo === null && $this->userInfo !== null) {
+            $this->userInfo->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($userInfo !== null && $userInfo->getUser() !== $this) {
+            $userInfo->setUser($this);
+        }
+
+        $this->userInfo = $userInfo;
 
         return $this;
     }

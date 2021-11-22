@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\HomeRegisterType;
 use App\Security\LoginFormAuthenticator;
+use App\Service\ComputeCompleted;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,7 @@ class HomeController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         UserAuthenticatorInterface $authenticator,
+        ComputeCompleted $computeCompleted,
         LoginFormAuthenticator $LoginFormAuthenticator): Response
     {
         // If already connected
@@ -48,9 +50,15 @@ class HomeController extends AbstractController
 
             $user->setPassword($hashedPassword);
 
+            // update the lastLogin field
+            $user->setLastLogin(new \DateTime());
+            
             // Store the new user
             $entityManager->persist($user);
             $entityManager->flush();
+            // handle percentage of completion
+            $computeCompleted->updateCompleted($user);
+            
 
             $this->addFlash(
                 'success',

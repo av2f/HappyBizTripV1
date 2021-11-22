@@ -15,9 +15,12 @@ use Faker;
 use DateInterval;
 use App\Entity\User;
 use App\Entity\Interest;
+use App\Entity\UserInfo;
 use App\Entity\InterestType;
 use App\Entity\SubscriptionType;
 use App\Entity\SubscriptionHistory;
+use App\Repository\UserRepository;
+use App\Service\ComputeCompleted;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,10 +28,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AppFixtures extends Fixture
 {
   private $passwordHasher;
+  private $computeCompleted;
+  private $userRepo;
   
-  public function __construct(UserPasswordHasherInterface $passwordHasher)
+  public function __construct(UserPasswordHasherInterface $passwordHasher, ComputeCompleted $computeCompleted, UserRepository $userRepo )
   {
       $this->passwordHasher = $passwordHasher;
+      $this->computeCompleted = $computeCompleted;
+      $this->userRepo =$userRepo;
   }
   
   public function load(ObjectManager $manager)
@@ -190,17 +197,11 @@ class AppFixtures extends Fixture
             'password'
           )
         )
-        ->setGender($gender)
         ->setFirstName($firstName)
         ->setLastName($faker->lastName)
         ->setSlug(strtolower($firstName))
         ->setBirthDate($birthDate)
-        ->setPhoneNumber($faker->PhoneNumber())
-        ->setSituation($situation)
         ->setAvatar($picture)
-        ->setProfession($faker->jobTitle)
-        ->setCompany($faker->company)
-        ->setDescription($faker->sentence())
         ->setIsSubscribed($subscribed)
         ->setLastLogin(new \DateTime());
 
@@ -241,6 +242,17 @@ class AppFixtures extends Fixture
       }
       $manager->persist($user);
 
+      // Create User info (UserInfo entity)
+      $userInfo = new UserInfo();
+      $userInfo ->setUser($user)
+                ->setGender($gender)
+                ->setSituation($situation)
+                ->setProfession($faker->jobTitle)
+                ->setCompany($faker->company)
+                ->setDescription($faker->sentence())
+                ->setPhoneNumber($faker->PhoneNumber());
+      $manager->persist($userInfo);
+
       // Create subscription history
       if ($subscribed) {
         $j = mt_rand(1,5);
@@ -272,15 +284,21 @@ class AppFixtures extends Fixture
           $interval = "P".$subscription->getDuration().$subscription->getDurationType();
           $dateEnd->add(new DateInterval($interval));
           $subscribe = new SubscriptionHistory();
-          $subscribe  -> setSubscriber($user)
-                      -> setSubscriptionType($subscription)
+          $subscribe  ->setSubscriber($user)
+                      ->setSubscriptionType($subscription)
                       ->setSubscribPayAt(\DateTimeImmutable::createFromMutable($dateBegin))
                       ->setSubscribBeginAt(\DateTimeImmutable::createFromMutable($dateBegin))
                       ->setSubscribEndAt(\DateTimeImmutable::createFromMutable($dateEnd));
           $manager->persist($subscribe);
         }
       }
+      //$this->updateCompleted->updateCompleted($user);
     }
     $manager->flush();
+    // update completed percentage
+    $users = $this->userRepo->findAll();
+    foreach ($users as $singleUser) {
+      $this->computeCompleted->updateCompleted($singleUser);
+    }
   }
 }

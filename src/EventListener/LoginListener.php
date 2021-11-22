@@ -31,6 +31,8 @@ class LoginListener
     $user = $event->getAuthenticationToken()->getUser();
 
     // store datetime of login
+    $user->setLastLogin(new \DateTime());
+    $this->entityInterface->flush();
 
     // if end of subscription <= 15 days, show message on login
     if ($user->getIsSubscribed() && $user->getDaysEndOfSubscription() <= 15) {
