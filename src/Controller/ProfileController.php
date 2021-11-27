@@ -2,20 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\ChangePasswordType;
-use App\Form\EditProfileType;
-use App\Repository\InterestRepository;
-use App\Repository\InterestTypeRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Service\ImageOptimizer;
 use Exception;
+use App\Entity\User;
+use App\Form\UserInfoType;
+use App\Form\EditProfileType;
+use App\Service\ImageOptimizer;
+use App\Form\ChangePasswordType;
+use App\Service\ComputeCompleted;
+use App\Repository\InterestRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\InterestTypeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProfileController extends AbstractController
@@ -89,17 +91,23 @@ class ProfileController extends AbstractController
     User $user,
     InterestRepository $qInterests,
     InterestTypeRepository $qInterestsType,
+    ComputeCompleted $computeCompleted,
     EntityManagerInterface $entityManager,
     Request $request ): Response
   {
     // Authorization managed by voter
     $this->denyAccessUnlessGranted('profile_edit', $user);
 
-    // Create the form
+    // Create User form
     $form = $this->createForm(EditProfileType::class, $user);
+    // Create UserInfo form
+    $userInfo = $user->getUserInfo();
+    $formInfo = $this->createForm(UserInfoType::class, $userInfo);
+
 
     // Handle the submit
     $form->handleRequest($request);
+    $formInfo->handleRequest($request);
 
     if($form->isSubmitted() && $form->isValid()) {
       // Handle interests
@@ -121,12 +129,16 @@ class ProfileController extends AbstractController
       // Update user
       $entityManager->flush();
 
+      // Update percentage of completude of profile
+      $computeCompleted->updateCompleted($user);
+
       return $this->redirectToRoute('profile_edit', ['slug' => $user->getSlug()]);
     }
       
     return $this->renderForm('profile/edit_profile.html.twig', [
       'user' =>$this->getUser(),
       'form' => $form,
+      'form_info' => $formInfo,
       'interests_type' => $qInterestsType->findInterestTypeOrder(),
       'interests_name' => $qInterests->findInterestOrder()
     ]);

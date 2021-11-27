@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% form_theme form 'partials/_profile_choice.html.twig' %}
+{% form_theme form_info 'partials/_profile_choice.html.twig' %}
 
 {# use macro to customize the render of the form #}
 {% import 'macros/form_render.html.twig' as fieldRender %}
@@ -63,21 +63,22 @@
     <input type="hidden" id="language" data-lang = "{{ app.request.locale }}">
     {# end of set variable #}
 
-    {# profile form #}
+    {# profile forms #}
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_start(form_info, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="d-flex justify-content-center pt-2">
         <div class="card card-profile mt-2">
           <div class="card-header"><i class="far fa-address-card"></i>  {{ 'profile.title.general_infos'|trans|raw }}</div>
           <div class="card-body">
-            {{ form_widget(form.gender) }}
-            {{ form_widget(form.situation) }}
+            {{ form_widget(form_info.gender) }}
+            {{ form_widget(form_info.situation) }}
             {{ form_row(form.firstName) }}
             {{ form_row(form.lastName) }}
             {{ fieldRender.formFieldRender('email', form.email, 'profile') }}
             {{ fieldRender.formDateRender('birthDate', form.birthDate, 'profile') }}
-            {# {{ form_row(form.phoneNumber) }} #}
-            {{ form_row(form.profession) }}
-            {{ form_row(form.company) }}
+            {{ form_row(form_info.phoneNumber) }}
+            {{ form_row(form_info.profession) }}
+            {{ form_row(form_info.company) }}
           </div>
         </div>
     </div>
@@ -85,7 +86,7 @@
       <div class="card card-profile mt-2">
         <div class="card-header"><i class="fas fa-user-edit"></i>  {{ 'profile.title.description'|trans|raw }}</div>
         <div class="card-body">
-            {{ form_widget(form.description)}}
+            {{ form_widget(form_info.description)}}
         </div>
       </div>
     </div>
@@ -104,6 +105,7 @@
           <i class="far fa-trash-alt"></i>  {{ 'profile.btn.delete'|trans|raw }}
       </button>
     </div>
+    {{ form_end(form_info) }}
     {{ form_end(form) }}
   </div>
 {% endblock %}

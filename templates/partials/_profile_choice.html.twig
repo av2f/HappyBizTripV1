@@ -2,13 +2,13 @@
     <div class="form-group mb-2">
         <div class="row">
             <div class="col-12 col-md-auto col-lg-auto">
-                {{ form_label(form) }}
+                {{ form_label(form_info.gender) }}
             </div>
             {% for key,choice in form.vars.choices %}
                 <div class="col-12 col-md-auto col-lg-auto form-check">
                     <input class="form-check-input" type="radio" id="{{ form.vars.id }}_{{ key }}" name="{{ form.vars.full_name }}"
                         style="margin-top:0.375em" value="{{ choice.value }}" {% if choice.value is same as (app.user.gender) %}checked{% endif %}>
-                    <label class="form-check-label label-profile" for "{{ form.vars.id }}_{{ key }}">
+                    <label class="form-check-label label-profile" for "{{ info.vars.id }}_{{ key }}">
                         {{ choice.label|trans|raw }}
                     </label>
                 </div>
